@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/xiadong/date_homework
+CMAKE_SOURCE_DIR = /home/xd/date_homework
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/xiadong/date_homework/build
+CMAKE_BINARY_DIR = /home/xd/date_homework/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/xiadong/date_homework/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/xiadong/date_homework/build/CMakeFiles /home/xiadong/date_homework/build/server/CMakeFiles/progress.marks
-	cd /home/xiadong/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/xiadong/date_homework/build/CMakeFiles 0
+	cd /home/xd/date_homework/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/xd/date_homework/build/CMakeFiles /home/xd/date_homework/build/server/CMakeFiles/progress.marks
+	cd /home/xd/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xd/date_homework/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/clean
+	cd /home/xd/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/xiadong/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/preinstall
+	cd /home/xd/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/preinstall
+	cd /home/xd/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/xiadong/date_homework/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/xd/date_homework/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 server/CMakeFiles/server.dir/rule:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/CMakeFiles/server.dir/rule
+	cd /home/xd/date_homework/build && $(MAKE) -f CMakeFiles/Makefile2 server/CMakeFiles/server.dir/rule
 .PHONY : server/CMakeFiles/server.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ server: server/CMakeFiles/server.dir/rule
 
 # fast build rule for target.
 server/fast:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/build
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/build
 .PHONY : server/fast
 
 server.o: server.cpp.o
@@ -131,7 +131,7 @@ server.o: server.cpp.o
 
 # target to build an object file
 server.cpp.o:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.o
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.o
 .PHONY : server.cpp.o
 
 server.i: server.cpp.i
@@ -140,7 +140,7 @@ server.i: server.cpp.i
 
 # target to preprocess a source file
 server.cpp.i:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.i
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.i
 .PHONY : server.cpp.i
 
 server.s: server.cpp.s
@@ -149,7 +149,7 @@ server.s: server.cpp.s
 
 # target to generate assembly for a file
 server.cpp.s:
-	cd /home/xiadong/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.s
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.s
 .PHONY : server.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/xiadong/date_homework/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/xd/date_homework/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

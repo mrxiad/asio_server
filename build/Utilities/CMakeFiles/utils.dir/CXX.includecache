@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/Utilities/StringUtils.h
+vector
+-
+string
+-
+
+/home/xd/date_homework/Utilities/StringUtils.cpp
+StringUtils.h
+/home/xd/date_homework/Utilities/StringUtils.h
+algorithm
+-
+sstream
+-
+

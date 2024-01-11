@@ -1,4 +1,4 @@
-# Install script for directory: /home/xiadong/date_homework/server
+# Install script for directory: /home/xd/date_homework/server
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

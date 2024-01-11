@@ -40,8 +40,11 @@ endif()
 
 
 # 添加源代码子目录
-add_subdirectory(server)
-add_subdirectory(src)
+add_subdirectory(server)#服务器
+add_subdirectory(src)#main
+add_subdirectory(analyze)#分析器
+add_subdirectory(Utilities)#工具
+add_subdirectory(DataStructures)#数据结构
 
 # 根据构建类型添加编译器标志
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

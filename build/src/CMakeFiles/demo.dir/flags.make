@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++17
 
 CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_FILESYSTEM_DYN_LINK -DBOOST_SYSTEM_DYN_LINK
 
-CXX_INCLUDES = -I/home/xiadong/date_homework/server/include -I/home/xiadong/date_homework/3rdParty/json/include 
+CXX_INCLUDES = -I/home/xd/date_homework/server/include -I/home/xd/date_homework/3rdParty/json/include 
 
