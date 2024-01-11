@@ -57,27 +57,27 @@ include server/CMakeFiles/server.dir/progress.make
 # Include the compile flags for this target's objects.
 include server/CMakeFiles/server.dir/flags.make
 
-server/CMakeFiles/server.dir/server.cpp.o: server/CMakeFiles/server.dir/flags.make
-server/CMakeFiles/server.dir/server.cpp.o: ../server/server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xd/date_homework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object server/CMakeFiles/server.dir/server.cpp.o"
-	cd /home/xd/date_homework/build/server && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/server.dir/server.cpp.o -c /home/xd/date_homework/server/server.cpp
+server/CMakeFiles/server.dir/src/server.cpp.o: server/CMakeFiles/server.dir/flags.make
+server/CMakeFiles/server.dir/src/server.cpp.o: ../server/src/server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xd/date_homework/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object server/CMakeFiles/server.dir/src/server.cpp.o"
+	cd /home/xd/date_homework/build/server && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/server.dir/src/server.cpp.o -c /home/xd/date_homework/server/src/server.cpp
 
-server/CMakeFiles/server.dir/server.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server.dir/server.cpp.i"
-	cd /home/xd/date_homework/build/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xd/date_homework/server/server.cpp > CMakeFiles/server.dir/server.cpp.i
+server/CMakeFiles/server.dir/src/server.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server.dir/src/server.cpp.i"
+	cd /home/xd/date_homework/build/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xd/date_homework/server/src/server.cpp > CMakeFiles/server.dir/src/server.cpp.i
 
-server/CMakeFiles/server.dir/server.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server.dir/server.cpp.s"
-	cd /home/xd/date_homework/build/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xd/date_homework/server/server.cpp -o CMakeFiles/server.dir/server.cpp.s
+server/CMakeFiles/server.dir/src/server.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server.dir/src/server.cpp.s"
+	cd /home/xd/date_homework/build/server && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xd/date_homework/server/src/server.cpp -o CMakeFiles/server.dir/src/server.cpp.s
 
 # Object files for target server
 server_OBJECTS = \
-"CMakeFiles/server.dir/server.cpp.o"
+"CMakeFiles/server.dir/src/server.cpp.o"
 
 # External object files for target server
 server_EXTERNAL_OBJECTS =
 
-../lib/libserver.so: server/CMakeFiles/server.dir/server.cpp.o
+../lib/libserver.so: server/CMakeFiles/server.dir/src/server.cpp.o
 ../lib/libserver.so: server/CMakeFiles/server.dir/build.make
 ../lib/libserver.so: ../3rdParty/json/lib/libjsoncpp.so
 ../lib/libserver.so: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0

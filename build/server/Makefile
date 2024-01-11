@@ -125,32 +125,32 @@ server/fast:
 	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/build
 .PHONY : server/fast
 
-server.o: server.cpp.o
+src/server.o: src/server.cpp.o
 
-.PHONY : server.o
+.PHONY : src/server.o
 
 # target to build an object file
-server.cpp.o:
-	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.o
-.PHONY : server.cpp.o
+src/server.cpp.o:
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/src/server.cpp.o
+.PHONY : src/server.cpp.o
 
-server.i: server.cpp.i
+src/server.i: src/server.cpp.i
 
-.PHONY : server.i
+.PHONY : src/server.i
 
 # target to preprocess a source file
-server.cpp.i:
-	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.i
-.PHONY : server.cpp.i
+src/server.cpp.i:
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/src/server.cpp.i
+.PHONY : src/server.cpp.i
 
-server.s: server.cpp.s
+src/server.s: src/server.cpp.s
 
-.PHONY : server.s
+.PHONY : src/server.s
 
 # target to generate assembly for a file
-server.cpp.s:
-	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/server.cpp.s
-.PHONY : server.cpp.s
+src/server.cpp.s:
+	cd /home/xd/date_homework/build && $(MAKE) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/src/server.cpp.s
+.PHONY : src/server.cpp.s
 
 # Help Target
 help:
@@ -161,9 +161,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... server"
-	@echo "... server.o"
-	@echo "... server.i"
-	@echo "... server.s"
+	@echo "... src/server.o"
+	@echo "... src/server.i"
+	@echo "... src/server.s"
 .PHONY : help
 
 

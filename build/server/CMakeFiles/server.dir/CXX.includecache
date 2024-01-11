@@ -86,9 +86,9 @@ string
 json.h
 -
 
-/home/xd/date_homework/server/server.cpp
+/home/xd/date_homework/server/src/server.cpp
 HTTPServer.h
-/home/xd/date_homework/server/HTTPServer.h
+/home/xd/date_homework/server/src/HTTPServer.h
 iostream
 -
 

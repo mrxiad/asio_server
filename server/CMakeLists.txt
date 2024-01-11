@@ -1,4 +1,6 @@
-add_library(server SHARED server.cpp)
+file(GLOB SERVER_SOURCES "src/*.cpp")
+
+add_library(server SHARED ${SERVER_SOURCES})
 
 message(STATUS "json头文件目录：${CMAKE_SOURCE_DIR}/3rdParty/json/include")
 target_include_directories(server PUBLIC 
