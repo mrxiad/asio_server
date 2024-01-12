@@ -1,53 +1,71 @@
-#include "HTTPServer.h"
 #include<iostream>
-// 构造函数实现
-HTTPServer::HTTPServer(int port) 
-    : acceptor(io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) {}
+#include<boost/asio.hpp>
+#include<set>
+#include<cstdlib>
+using namespace std;
+using namespace boost;
 
-// 启动服务器的实现
-void HTTPServer::start() {
-    for (;;) {
-        boost::asio::ip::tcp::socket socket(io_context);
-        acceptor.accept(socket);
-        handle_request(socket);
+const int MAX_LENGTH = 1024;//最大长度
+typedef std::shared_ptr<asio::ip::tcp::socket> socket_ptr;
+std::set<std::shared_ptr<std::thread>> threads;//线程集合
+
+
+//会话
+void session(socket_ptr sock){
+    try{
+        while(true){
+            char data[MAX_LENGTH];
+            memset(data, 0, MAX_LENGTH);
+            boost::system::error_code error;//错误码
+
+            //接受数据，但是如果客户端断开连接，也会读到数据，但是长度为0
+            size_t length = sock->read_some(asio::buffer(data), error);//接收数据
+            if(error == asio::error::eof){//客户端断开连接
+                cout << "client close" << endl;
+                break;
+            }
+            else if(error){
+                throw boost::system::system_error(error);
+            }
+            cout << "receive from " << sock->remote_endpoint().address().to_string() << endl;
+            cout << "receive message is " << data << endl;
+
+            //回传信息值
+            boost::asio::write(*sock, boost::asio::buffer(data, length));
+        }
+    }catch(std::exception& e){
+        std::cerr << "Exception: " << e.what() << endl;
     }
 }
 
-// 处理请求的实现
-void HTTPServer::handle_request(boost::asio::ip::tcp::socket& socket) {
-    try {
-        boost::asio::streambuf request_buffer;
-        boost::asio::read_until(socket, request_buffer, "\r\n\r\n");
-
-        // 从请求中提取头部和主体
-        std::istream request_stream(&request_buffer);
-        std::string header_line, body;
-        while (std::getline(request_stream, header_line) && header_line != "\r") {
-            // 可以处理头部信息，如果需要
+void server(boost::asio::io_context& ioc, unsigned short port){
+    try{
+        //创建acceptor
+        asio::ip::tcp::acceptor acceptor(ioc, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port));
+        while(true){
+            //创建socket
+            socket_ptr sock(new asio::ip::tcp::socket(ioc));
+            //等待连接
+            acceptor.accept(*sock);
+            //创建线程
+            std::shared_ptr<std::thread> thread(new std::thread(session, sock));
+            threads.insert(thread);
         }
-        body.assign((std::istreambuf_iterator<char>(request_stream)), std::istreambuf_iterator<char>());
-
-        // 解析 JSON
-        Json::Value root;
-        Json::Reader reader;
-        if (!reader.parse(body, root)) {
-            std::cerr << "Error in parsing JSON\n";
-            return;
-        }
-
-        // 添加 "data": "success"
-        root["data"] = "success";
-
-        // 将 JSON 转换为字符串
-        Json::StreamWriterBuilder builder;
-        const std::string response_json = Json::writeString(builder, root);
-
-        // 构建并发送 HTTP 响应
-        std::string response = 
-            "HTTP/1.1 200 OK\r\nContent-Length: " + std::to_string(response_json.length()) + 
-            "\r\nContent-Type: application/json\r\n\r\n" + response_json;
-        boost::asio::write(socket, boost::asio::buffer(response));
-    } catch (const std::exception& e) {
-        std::cerr << "Exception in handle_request: " << e.what() << "\n";
+    }catch(std::exception& e){
+        std::cerr << "Exception: " << e.what() << endl;
     }
+}
+
+int main()
+{
+    try{
+        boost::asio::io_context  ioc;
+        server(ioc, 10086);
+        for (auto &t : threads) {//等待其他线程结束，否则主线程结束，其他线程也会结束
+            t->join();
+        }
+    }catch(std::exception& e){
+        std::cerr << "Exception: " << e.what() << endl;
+    }
+    return 0;
 }

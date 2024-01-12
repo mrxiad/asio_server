@@ -1,7 +1,11 @@
 {
     "files.associations": {
+        "*.txt": "cpp",
         "algorithm": "cpp",
         "string": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "iostream": "cpp",
+        "*.ipp": "cpp",
+        "functional": "cpp"
     }
 }
