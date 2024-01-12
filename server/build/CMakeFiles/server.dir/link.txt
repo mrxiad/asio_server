@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/server.dir/src/server.o  -o server  -lpthread 
+/usr/bin/c++    -rdynamic CMakeFiles/server.dir/src/CServer.o CMakeFiles/server.dir/src/CSession.o CMakeFiles/server.dir/src/main.o  -o server  -lpthread 

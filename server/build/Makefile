@@ -124,19 +124,49 @@ server/fast:
 .PHONY : server/fast
 
 # target to build an object file
-src/server.o:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server.o
-.PHONY : src/server.o
+src/CServer.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CServer.o
+.PHONY : src/CServer.o
 
 # target to preprocess a source file
-src/server.i:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server.i
-.PHONY : src/server.i
+src/CServer.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CServer.i
+.PHONY : src/CServer.i
 
 # target to generate assembly for a file
-src/server.s:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server.s
-.PHONY : src/server.s
+src/CServer.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CServer.s
+.PHONY : src/CServer.s
+
+# target to build an object file
+src/CSession.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CSession.o
+.PHONY : src/CSession.o
+
+# target to preprocess a source file
+src/CSession.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CSession.i
+.PHONY : src/CSession.i
+
+# target to generate assembly for a file
+src/CSession.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CSession.s
+.PHONY : src/CSession.s
+
+# target to build an object file
+src/main.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/main.o
+.PHONY : src/main.o
+
+# target to preprocess a source file
+src/main.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/main.i
+.PHONY : src/main.i
+
+# target to generate assembly for a file
+src/main.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/main.s
+.PHONY : src/main.s
 
 # Help Target
 help:
@@ -147,9 +177,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... server"
-	@echo "... src/server.o"
-	@echo "... src/server.i"
-	@echo "... src/server.s"
+	@echo "... src/CServer.o"
+	@echo "... src/CServer.i"
+	@echo "... src/CServer.s"
+	@echo "... src/CSession.o"
+	@echo "... src/CSession.i"
+	@echo "... src/CSession.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/xd/date_homework/server/include -I/home/xd/date_homework/server/3rdParty/json/include 
+CXX_INCLUDES = -I/home/xd/date_homework/server/include 
 

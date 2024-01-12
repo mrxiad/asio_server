@@ -6,6 +6,8 @@
         "sstream": "cpp",
         "iostream": "cpp",
         "*.ipp": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "optional": "cpp",
+        "variant": "cpp"
     }
 }

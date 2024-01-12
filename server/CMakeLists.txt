@@ -2,10 +2,7 @@ file(GLOB SERVER_SOURCES "src/*.cpp")
 
 add_executable(server ${SERVER_SOURCES})
 
-message(STATUS "json头文件目录：${CMAKE_SOURCE_DIR}/3rdParty/json/include")
-target_include_directories(server PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/3rdParty/json/include)
+target_include_directories(server PUBLIC include)
 
 # 添加boost库
 if(Boost_FOUND)

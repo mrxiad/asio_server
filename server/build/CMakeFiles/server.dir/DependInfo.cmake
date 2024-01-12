@@ -4,14 +4,15 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/xd/date_homework/server/src/server.cpp" "/home/xd/date_homework/server/build/CMakeFiles/server.dir/src/server.o"
+  "/home/xd/date_homework/server/src/CServer.cpp" "/home/xd/date_homework/server/build/CMakeFiles/server.dir/src/CServer.o"
+  "/home/xd/date_homework/server/src/CSession.cpp" "/home/xd/date_homework/server/build/CMakeFiles/server.dir/src/CSession.o"
+  "/home/xd/date_homework/server/src/main.cpp" "/home/xd/date_homework/server/build/CMakeFiles/server.dir/src/main.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../include"
-  "../3rdParty/json/include"
   )
 
 # Targets to which this target links.

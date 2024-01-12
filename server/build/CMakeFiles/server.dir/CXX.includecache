@@ -6,13 +6,37 @@
 
 #IncludeRegexTransform: 
 
-/home/xd/date_homework/server/src/server.cpp
-iostream
--
+../include/CServer.h
 boost/asio.hpp
 -
-set
+CSession.h
+../include/CSession.h
+memory
 -
-cstdlib
+map
+-
+
+../include/CSession.h
+boost/asio.hpp
+-
+boost/uuid/uuid_io.hpp
+-
+boost/uuid/uuid_generators.hpp
+-
+queue
+-
+mutex
+-
+memory
+-
+iostream
+-
+
+/home/xd/date_homework/server/src/CSession.cpp
+CSession.h
+/home/xd/date_homework/server/src/CSession.h
+CServer.h
+/home/xd/date_homework/server/src/CServer.h
+iostream
 -
 
