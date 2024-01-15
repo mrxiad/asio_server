@@ -31,6 +31,8 @@ memory
 -
 iostream
 -
+string
+-
 
 /home/xd/date_homework/server/src/CSession.cpp
 CSession.h

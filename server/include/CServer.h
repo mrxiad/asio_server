@@ -11,10 +11,10 @@ using boost::asio::ip::tcp;
 class CServer
 {
 public:
+    //初始化接收器和端口
 	CServer(boost::asio::io_context& io_context, short port);
 	void ClearSession(std::string);
 private:
-    //
 	void HandleAccept(shared_ptr<CSession>, const boost::system::error_code & error);
 	void StartAccept();
 	boost::asio::io_context &_io_context;//io上下文
