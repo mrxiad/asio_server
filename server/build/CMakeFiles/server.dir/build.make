@@ -97,10 +97,24 @@ CMakeFiles/server.dir/src/CSession.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server.dir/src/CSession.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xiadong/date_homework/server/src/CSession.cpp -o CMakeFiles/server.dir/src/CSession.cpp.s
 
+CMakeFiles/server.dir/src/LogicSystem.cpp.o: CMakeFiles/server.dir/flags.make
+CMakeFiles/server.dir/src/LogicSystem.cpp.o: /home/xiadong/date_homework/server/src/LogicSystem.cpp
+CMakeFiles/server.dir/src/LogicSystem.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server.dir/src/LogicSystem.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/src/LogicSystem.cpp.o -MF CMakeFiles/server.dir/src/LogicSystem.cpp.o.d -o CMakeFiles/server.dir/src/LogicSystem.cpp.o -c /home/xiadong/date_homework/server/src/LogicSystem.cpp
+
+CMakeFiles/server.dir/src/LogicSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server.dir/src/LogicSystem.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xiadong/date_homework/server/src/LogicSystem.cpp > CMakeFiles/server.dir/src/LogicSystem.cpp.i
+
+CMakeFiles/server.dir/src/LogicSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server.dir/src/LogicSystem.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xiadong/date_homework/server/src/LogicSystem.cpp -o CMakeFiles/server.dir/src/LogicSystem.cpp.s
+
 CMakeFiles/server.dir/src/MsgNode.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/src/MsgNode.cpp.o: /home/xiadong/date_homework/server/src/MsgNode.cpp
 CMakeFiles/server.dir/src/MsgNode.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server.dir/src/MsgNode.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/server.dir/src/MsgNode.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/src/MsgNode.cpp.o -MF CMakeFiles/server.dir/src/MsgNode.cpp.o.d -o CMakeFiles/server.dir/src/MsgNode.cpp.o -c /home/xiadong/date_homework/server/src/MsgNode.cpp
 
 CMakeFiles/server.dir/src/MsgNode.cpp.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/server.dir/src/MsgNode.cpp.s: cmake_force
 CMakeFiles/server.dir/src/main.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/src/main.cpp.o: /home/xiadong/date_homework/server/src/main.cpp
 CMakeFiles/server.dir/src/main.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/server.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/server.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/src/main.cpp.o -MF CMakeFiles/server.dir/src/main.cpp.o.d -o CMakeFiles/server.dir/src/main.cpp.o -c /home/xiadong/date_homework/server/src/main.cpp
 
 CMakeFiles/server.dir/src/main.cpp.i: cmake_force
@@ -129,6 +143,7 @@ CMakeFiles/server.dir/src/main.cpp.s: cmake_force
 server_OBJECTS = \
 "CMakeFiles/server.dir/src/CServer.cpp.o" \
 "CMakeFiles/server.dir/src/CSession.cpp.o" \
+"CMakeFiles/server.dir/src/LogicSystem.cpp.o" \
 "CMakeFiles/server.dir/src/MsgNode.cpp.o" \
 "CMakeFiles/server.dir/src/main.cpp.o"
 
@@ -137,6 +152,7 @@ server_EXTERNAL_OBJECTS =
 
 server: CMakeFiles/server.dir/src/CServer.cpp.o
 server: CMakeFiles/server.dir/src/CSession.cpp.o
+server: CMakeFiles/server.dir/src/LogicSystem.cpp.o
 server: CMakeFiles/server.dir/src/MsgNode.cpp.o
 server: CMakeFiles/server.dir/src/main.cpp.o
 server: CMakeFiles/server.dir/build.make
@@ -144,7 +160,7 @@ server: /usr/lib/x86_64-linux-gnu/libboost_system.so
 server: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 server: /home/xiadong/date_homework/server/../3rdParty/json/lib/libjsoncpp.so
 server: CMakeFiles/server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/xiadong/date_homework/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

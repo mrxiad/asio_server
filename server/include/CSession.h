@@ -43,4 +43,13 @@ private:
 	std::shared_ptr<MsgNode> _recv_head_node;//这个是用来存储收到的头部的
 };
 
+
+class LogicNode {
+	friend class LogicSystem;
+public:
+	LogicNode(shared_ptr<CSession>, shared_ptr<RecvNode>);
+private:
+	shared_ptr<CSession> _session;
+	shared_ptr<RecvNode> _recvnode;
+};
 #endif

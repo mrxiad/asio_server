@@ -16,5 +16,6 @@ endif()
 # 添加 pthread 库
 target_link_libraries(server pthread)
 
+#json库
 target_link_libraries(server "${CMAKE_SOURCE_DIR}/../3rdParty/json/lib/libjsoncpp.so")
 

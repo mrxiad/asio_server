@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/xiadong/date_homework/server/src/CServer.cpp" "CMakeFiles/server.dir/src/CServer.cpp.o" "gcc" "CMakeFiles/server.dir/src/CServer.cpp.o.d"
   "/home/xiadong/date_homework/server/src/CSession.cpp" "CMakeFiles/server.dir/src/CSession.cpp.o" "gcc" "CMakeFiles/server.dir/src/CSession.cpp.o.d"
+  "/home/xiadong/date_homework/server/src/LogicSystem.cpp" "CMakeFiles/server.dir/src/LogicSystem.cpp.o" "gcc" "CMakeFiles/server.dir/src/LogicSystem.cpp.o.d"
   "/home/xiadong/date_homework/server/src/MsgNode.cpp" "CMakeFiles/server.dir/src/MsgNode.cpp.o" "gcc" "CMakeFiles/server.dir/src/MsgNode.cpp.o.d"
   "/home/xiadong/date_homework/server/src/main.cpp" "CMakeFiles/server.dir/src/main.cpp.o" "gcc" "CMakeFiles/server.dir/src/main.cpp.o.d"
   )

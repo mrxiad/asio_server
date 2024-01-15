@@ -25,7 +25,7 @@ public:
         ::memset(_data,0,_total_len);
         _cur_len=0;
     }
-protected:
+public:
     short _cur_len;
     short _total_len;
     char* _data;
@@ -33,6 +33,7 @@ protected:
 
 class RecvNode:public MsgNode
 {
+    friend class LogicSystem;
 public:
     RecvNode(short max_len,short id);
 private:
@@ -41,6 +42,7 @@ private:
 
 class SendNode:public MsgNode
 {
+    friend class LogicSystem;
 public:
     SendNode(const char* msg,short max_len,short id);
 private:

@@ -177,6 +177,30 @@ src/CSession.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/CSession.cpp.s
 .PHONY : src/CSession.cpp.s
 
+src/LogicSystem.o: src/LogicSystem.cpp.o
+.PHONY : src/LogicSystem.o
+
+# target to build an object file
+src/LogicSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/LogicSystem.cpp.o
+.PHONY : src/LogicSystem.cpp.o
+
+src/LogicSystem.i: src/LogicSystem.cpp.i
+.PHONY : src/LogicSystem.i
+
+# target to preprocess a source file
+src/LogicSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/LogicSystem.cpp.i
+.PHONY : src/LogicSystem.cpp.i
+
+src/LogicSystem.s: src/LogicSystem.cpp.s
+.PHONY : src/LogicSystem.s
+
+# target to generate assembly for a file
+src/LogicSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/LogicSystem.cpp.s
+.PHONY : src/LogicSystem.cpp.s
+
 src/MsgNode.o: src/MsgNode.cpp.o
 .PHONY : src/MsgNode.o
 
@@ -240,6 +264,9 @@ help:
 	@echo "... src/CSession.o"
 	@echo "... src/CSession.i"
 	@echo "... src/CSession.s"
+	@echo "... src/LogicSystem.o"
+	@echo "... src/LogicSystem.i"
+	@echo "... src/LogicSystem.s"
 	@echo "... src/MsgNode.o"
 	@echo "... src/MsgNode.i"
 	@echo "... src/MsgNode.s"
