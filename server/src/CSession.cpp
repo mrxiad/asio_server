@@ -1,6 +1,7 @@
 #include "CSession.h"
 #include"CServer.h"
 #include"json/json.h"
+#include"LogicSystem.h"
 #include<iostream>
 #include<sstream>
 CSession::CSession(boost::asio::io_service& io_service, CServer* server):
@@ -162,15 +163,9 @@ void CSession::HandleRead(const boost::system::error_code& error, size_t  bytes_
 					bytes_transferred -= msg_len;
 					_recv_msg_node->_data[_recv_msg_node->_total_len] = '\0';
 					//cout << "receive data is " << _recv_msg_node->_data << endl;
-					//此处可以调用Send发送测试
-					Json::Reader reader;
-					Json::Value root;
-					reader.parse(std::string(_recv_msg_node->_data, _recv_msg_node->_total_len), root);
-					std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
-						<< root["data"].asString() << endl;
-					root["data"] = "server has received msg, msg data is " + root["data"].asString();
-					std::string return_str = root.toStyledString();
-					Send(return_str, root["id"].asInt());
+					//此处将消息投递到逻辑队列中
+					LogicSystem::GetInstance()->PostMsgToQue(make_shared<LogicNode>(shared_from_this(), _recv_msg_node));
+				
 					//继续轮询剩余未处理数据
 					_b_head_parse = false;
 					_recv_head_node->Clear();
@@ -200,15 +195,9 @@ void CSession::HandleRead(const boost::system::error_code& error, size_t  bytes_
 				copy_len += remain_msg;
 				_recv_msg_node->_data[_recv_msg_node->_total_len] = '\0';
 				//cout << "receive data is " << _recv_msg_node->_data << endl;
-					//此处可以调用Send发送测试
-				Json::Reader reader;
-				Json::Value root;
-				reader.parse(std::string(_recv_msg_node->_data, _recv_msg_node->_total_len), root);
-				std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
-					<< root["data"].asString() << endl;
-				root["data"] = "server has received msg, msg data is " + root["data"].asString();
-				std::string return_str = root.toStyledString();
-				Send(return_str, root["id"].asInt());
+				//此处将消息投递到逻辑队列中
+				LogicSystem::GetInstance()->PostMsgToQue(make_shared<LogicNode>(shared_from_this(), _recv_msg_node));
+				
 				//继续轮询剩余未处理数据
 				_b_head_parse = false;
 				_recv_head_node->Clear();

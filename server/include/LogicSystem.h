@@ -21,7 +21,7 @@ class LogicSystem:public Singleton<LogicSystem>
 	friend class Singleton<LogicSystem>;
 public:
 	~LogicSystem();
-	void PostMsgToQue(shared_ptr < LogicNode> msg);
+	void PostMsgToQue(shared_ptr <LogicNode> msg);
 private:
 	LogicSystem();
 	void DealMsg();//入口，解耦合

@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/xiadong/date_homework/server/include
 
-CXX_FLAGS = 
+CXX_FLAGS = -std=gnu++1z
 

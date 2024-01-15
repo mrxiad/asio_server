@@ -45,11 +45,14 @@ private:
 
 
 class LogicNode {
-	friend class LogicSystem;
+    friend class LogicSystem;
 public:
-	LogicNode(shared_ptr<CSession>, shared_ptr<RecvNode>);
+    LogicNode(shared_ptr<CSession>session, 
+    shared_ptr<RecvNode> recvnode):
+	_session(session),_recvnode(recvnode) {
+	}
 private:
-	shared_ptr<CSession> _session;
-	shared_ptr<RecvNode> _recvnode;
+    shared_ptr<CSession> _session;
+    shared_ptr<RecvNode> _recvnode;
 };
 #endif

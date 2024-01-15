@@ -14,7 +14,7 @@ LogicSystem::~LogicSystem(){
 }
 
 //session中read后调用，投递到消息队列里,用于读取消息
-void LogicSystem::PostMsgToQue(shared_ptr < LogicNode> msg) {
+void LogicSystem::PostMsgToQue(shared_ptr<LogicNode> msg) {
 	std::unique_lock<std::mutex> unique_lk(_mutex);
 	_msg_que.push(msg);
 	//由0变为1则发送通知信号
