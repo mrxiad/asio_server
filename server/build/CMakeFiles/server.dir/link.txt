@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/server.dir/src/CServer.o CMakeFiles/server.dir/src/CSession.o CMakeFiles/server.dir/src/main.o  -o server  -lpthread 
+/usr/bin/c++ CMakeFiles/server.dir/src/CServer.cpp.o CMakeFiles/server.dir/src/CSession.cpp.o CMakeFiles/server.dir/src/MsgNode.cpp.o CMakeFiles/server.dir/src/main.cpp.o -o server  -Wl,-rpath,/home/xiadong/date_homework/server/../3rdParty/json/lib /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so -lpthread /home/xiadong/date_homework/server/../3rdParty/json/lib/libjsoncpp.so 

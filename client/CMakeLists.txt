@@ -1,19 +1,20 @@
-file(GLOB SERVER_SOURCES "src/*.cpp")
+cmake_minimum_required(VERSION 3.10)
+project(YourProjectName)
+file(GLOB client_SOURCES "src/*.cpp")
 
-add_executable(client ${SERVER_SOURCES})
+add_executable(client ${client_SOURCES})
+target_include_directories(client PUBLIC include)
 
-message(STATUS "json头文件目录：${CMAKE_SOURCE_DIR}/3rdParty/json/include")
-target_include_directories(client PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/3rdParty/json/include)
-
-# 添加boost库
+# 查找 Boost 库
+find_package(Boost 1.65 REQUIRED COMPONENTS system filesystem)
 if(Boost_FOUND)
-    message(STATUS "找到了Boost库 ${Boost_VERSION_MAJOR}.${Boost_VERSION_MINOR}.${Boost_VERSION_PATCH} in ${Boost_INCLUDE_DIRS}")
-    message(STATUS "Boost库的库目录是 ${Boost_LIBRARY_DIRS}")
+    message(STATUS "找到了 Boost 库 ${Boost_VERSION_STRING} 在 ${Boost_INCLUDE_DIRS}")
     target_include_directories(client PRIVATE ${Boost_INCLUDE_DIRS})
     target_link_libraries(client ${Boost_LIBRARIES})
 endif()
 
-# 添加pthread库
+# 添加 pthread 库
 target_link_libraries(client pthread)
+
+target_link_libraries(client "${CMAKE_SOURCE_DIR}/../3rdParty/json/lib/libjsoncpp.so")
+

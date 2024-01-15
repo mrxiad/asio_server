@@ -1,10 +1,11 @@
 #include "CServer.h"
+#include "CSession.h"
 #include <iostream>
 
-//初始化并且开启监听
-CServer::CServer(boost::asio::io_context& io_context, short port):_io_context(io_context), _port(port),
-_acceptor(io_context, tcp::endpoint(tcp::v4(),port))
+CServer::CServer(boost::asio::io_service& io_service, short port):_io_service(io_service), _port(port),
+_acceptor(io_service, tcp::endpoint(tcp::v4(),port))
 {
+	cout << "Server start success, listen on port : " << _port << endl;
 	StartAccept();
 }
 
@@ -14,16 +15,14 @@ void CServer::HandleAccept(shared_ptr<CSession> new_session, const boost::system
 		_sessions.insert(make_pair(new_session->GetUuid(), new_session));
 	}
 	else {
-		cout << "session accept failed, error is " << error.value() << endl;
+		cout << "session accept failed, error is " << error.message() << endl;
 	}
 
 	StartAccept();
 }
 
-//开始接收，接收成功后调用HandleAccept
 void CServer::StartAccept() {
-	shared_ptr<CSession> new_session = make_shared<CSession>(_io_context, this);
-    //这一步是异步的，所以不会阻塞？
+	shared_ptr<CSession> new_session = std::make_shared<CSession>(_io_service, this);
 	_acceptor.async_accept(new_session->GetSocket(), std::bind(&CServer::HandleAccept, this, new_session, placeholders::_1));
 }
 

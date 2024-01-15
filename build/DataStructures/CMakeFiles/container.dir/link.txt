@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,libcontainer.so -o ../../lib/libcontainer.so CMakeFiles/container.dir/HashWordContainer.cpp.o CMakeFiles/container.dir/ListWordContainer.cpp.o CMakeFiles/container.dir/TreeWordContainer.cpp.o 

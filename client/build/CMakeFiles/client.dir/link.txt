@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/client.dir/src/client.o  -o client  -lpthread 
+/usr/bin/c++ CMakeFiles/client.dir/src/client.cpp.o -o client  -Wl,-rpath,/home/xiadong/date_homework/client/../3rdParty/json/lib /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so -lpthread /home/xiadong/date_homework/client/../3rdParty/json/lib/libjsoncpp.so 

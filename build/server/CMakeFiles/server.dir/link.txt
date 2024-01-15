@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,libserver.so -o ../../lib/libserver.so CMakeFiles/server.dir/src/server.cpp.o  -Wl,-rpath,/home/xd/date_homework/3rdParty/json/lib ../../3rdParty/json/lib/libjsoncpp.so /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0 -lpthread 
