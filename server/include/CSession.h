@@ -34,10 +34,10 @@ private:
 	char _data[MAX_LENGTH];
 	CServer* _server;//方便server删除自己
 	bool _b_close;
-	std::queue<shared_ptr<MsgNode> > _send_que;//这个是用来存储要发送的消息的
+	std::queue<shared_ptr<SendNode> > _send_que;//这个是用来存储要发送的消息的
 	std::mutex _send_lock;
 	//收到的消息结构
-	std::shared_ptr<MsgNode> _recv_msg_node;//这个是用来存储收到的消息的
+	std::shared_ptr<RecvNode> _recv_msg_node;//这个是用来存储收到的消息的
 	bool _b_head_parse;
 	//收到的头部结构
 	std::shared_ptr<MsgNode> _recv_head_node;//这个是用来存储收到的头部的
