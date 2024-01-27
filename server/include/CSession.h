@@ -31,7 +31,7 @@ private:
 	void HandleWrite(const boost::system::error_code& error, std::shared_ptr<CSession> shared_self);
 	tcp::socket _socket;
 	std::string _uuid;
-	char _data[MAX_LENGTH];
+	char _data[MAX_LENGTH];//buffer缓冲区，用于接受客户端的字节流
 	CServer* _server;//方便server删除自己
 	bool _b_close;
 	std::queue<shared_ptr<SendNode> > _send_que;//这个是用来存储要发送的消息的

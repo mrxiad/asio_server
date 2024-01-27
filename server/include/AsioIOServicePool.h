@@ -15,7 +15,6 @@ public:
 	using Work = boost::asio::io_service::work;
 	using WorkPtr = std::unique_ptr<Work>;
 
-    //如果用智能指针，必须放到public，否则智能指针类访问不到
     ~AsioIOServicePool();
 
 	AsioIOServicePool(const AsioIOServicePool&) = delete;

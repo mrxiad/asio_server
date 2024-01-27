@@ -35,6 +35,8 @@ class RecvNode:public MsgNode
 {
     friend class LogicSystem;
 public:
+
+    //这个传递的参数是正常的，接受消息方不存转化为字节序，因为要处理这些消息
     RecvNode(short max_len,short id);
 private:
     short _msg_id;
@@ -44,6 +46,8 @@ class SendNode:public MsgNode
 {
     friend class LogicSystem;
 public:
+
+    //这个传递的参数是正常的，内部会自动转换成字节序
     SendNode(const char* msg,short max_len,short id);
 private:
     short _msg_id;
