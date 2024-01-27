@@ -1,5 +1,16 @@
-# 忽略所有名为 'build' 的目录
-**/build/
+# Ignore build folders
+/build
+/client/build
+/server/build
 
-# 忽略'.vscode'目录
-.vscode/
+# Ignore Node.js modules
+/node_modules
+/front/node_modules
+
+# Ignore binary executables
+/bin
+
+# Ignore Python scripts
+client.py
+create_project.py
+
