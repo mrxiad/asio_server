@@ -4296,7 +4296,8 @@ CMakeFiles/server.dir/src/LogicSystem.cpp.o: /home/xiadong/asio_server/server/sr
   /usr/include/c++/9/stack \
   /usr/include/c++/9/bits/stl_stack.h \
   /usr/local/include/json/value.h \
-  /usr/local/include/json/reader.h
+  /usr/local/include/json/reader.h \
+  /home/xiadong/asio_server/server/include/code.h
 
 CMakeFiles/server.dir/src/MsgNode.cpp.o: /home/xiadong/asio_server/server/src/MsgNode.cpp \
   /usr/include/stdc-predef.h \
@@ -6648,6 +6649,8 @@ CMakeFiles/server.dir/src/main.cpp.o: /home/xiadong/asio_server/server/src/main.
 /usr/include/boost/date_time/date_clock_device.hpp:
 
 /usr/include/boost/asio/detail/operation.hpp:
+
+/home/xiadong/asio_server/server/include/code.h:
 
 /usr/include/boost/asio/detail/impl/posix_event.ipp:
 

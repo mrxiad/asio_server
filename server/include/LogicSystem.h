@@ -26,7 +26,7 @@ public:
 	void PostMsgToQue(shared_ptr <LogicNode> msg);
 
 private:
-//注册消息函数
+	//注册消息函数
 	void RegisterCallBacks();
 
 	//处理hello_word类型的消息
@@ -37,6 +37,24 @@ private:
 
 	//处理登录消息
 	void LoginCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理登出消息
+	void logoutCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理添加好友类型的消息
+	void addFriendCallBack(shared_ptr<CSession> session, short msg_id, string msg_data);
+	 
+	//处理一对一聊天消息
+	void oneChatCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理加入群组消息
+	void JoinGroupCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理创建群组消息
+	void CreateGroupCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理群组聊天消息
+	void groupChatCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
 
 private:
 	LogicSystem();

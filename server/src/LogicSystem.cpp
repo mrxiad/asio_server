@@ -1,5 +1,6 @@
 #include "LogicSystem.h"
-
+#include "string"
+#include "code.h"
 using namespace std;
 
 LogicSystem::LogicSystem():_b_stop(false){
@@ -80,6 +81,31 @@ void LogicSystem::RegisterCallBacks() {
 	//注册登录消息
 	_fun_callbacks.insert(make_pair(MSG_LOGIN, std::bind(&LogicSystem::LoginCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
+
+	//注册登出消息
+	_fun_callbacks.insert(make_pair(MSG_LOGOUT, std::bind(&LogicSystem::logoutCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+
+	//注册添加好友消息
+	_fun_callbacks.insert(make_pair(MSG_ADD_FRIEND, std::bind(&LogicSystem::addFriendCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+
+	//注册一对一聊天消息
+	_fun_callbacks.insert(make_pair(MSG_ONE_CHAT, std::bind(&LogicSystem::oneChatCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+	
+	//注册加入群组消息
+	_fun_callbacks.insert(make_pair(MSG_JOIN_GROUP, std::bind(&LogicSystem::JoinGroupCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+	
+	//注册创建群组消息
+	_fun_callbacks.insert(make_pair(MSG_CREATE_GROUP, std::bind(&LogicSystem::CreateGroupCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+	
+	//注册群组聊天消息
+	_fun_callbacks.insert(make_pair(MSG_GROUP_CHAT, std::bind(&LogicSystem::groupChatCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+
 }
 /*
 	以下是注册回调函数，注意：需要session，id，data
@@ -94,7 +120,7 @@ void LogicSystem::HelloWordCallBack(shared_ptr<CSession> session, short msg_id, 
 	Json::Reader reader;
 	Json::Value root;
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
+	std::cout << "recevie msg id  is " << msg_id << " msg data is "
 		<< root["data"].asString() << endl;
 	std::cout<<"进入hello_word回调函数"<<endl;
 	//需要在这里构造回复的消息
@@ -108,13 +134,41 @@ void LogicSystem::HelloWordCallBack(shared_ptr<CSession> session, short msg_id, 
 void LogicSystem::RegisterCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
 	Json::Value root;
+	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
+	std::cout << "recevie msg id  is " << msg_id<< " msg data is "
 		<< root["data"].asString() << endl;
 	std::cout<<"进入注册回调函数"<<endl;
 	//需要在这里构造回复的消息
-	root["data"] = "server has received msg, msg data is " + root["data"].asString();
-	std::string return_str = root.toStyledString();
+	
+	/*
+        获取用户名和密码然后插入数据库
+        返回是否插入成功
+    */
+    std::string username = root["username"].asString();
+	std::string password = root["password"].asString();
+
+	std::cout<<"获取到的用户名是"<<username<<endl;
+	std::cout<<"获取到的密码是"<<password<<endl;
+	
+	bool is_insert_success = true;
+	/*
+		插入数据库(等待实现)
+		返回是否插入成功
+	*/
+
+	/*
+		构造返回消息
+	*/
+	if(is_insert_success){
+		response["code"] = CODE_REGISTER_SUCCESS;
+		response["data"] = "register success";
+	}
+	else {
+		response["code"] = CODE_REGISTER_FAILED;
+		response["data"] = "register failed";
+	}
+	std::string return_str = response.toStyledString();
 	session->Send(return_str, msg_id);//发送消息
 }
 
@@ -122,12 +176,168 @@ void LogicSystem::RegisterCallBack(shared_ptr<CSession> session, short msg_id, s
 void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
 	Json::Value root;
+	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
+	std::cout << "recevie msg id  is " << msg_id << " msg data is "
 		<< root["data"].asString() << endl;
 	std::cout<<"进入登录回调函数"<<endl;
-	//需要在这里构造回复的消息
-	root["data"] = "server has received msg, msg data is " + root["data"].asString();
-	std::string return_str = root.toStyledString();
+	
+
+	/*
+		获取用户名和密码
+	*/
+	std::string username = root["username"].asString();
+	std::string password = root["password"].asString();
+
+	bool is_login_success = true;
+	/*
+		查询数据库(等待实现)
+		返回是否查询成功
+	*/
+
+	/*
+		构造返回消息
+	*/
+	
+	if(is_login_success){
+		response["code"] = CODE_LOGIN_SUCCESS;
+		response["data"] = "login success";
+	}
+	else {
+		response["code"] = CODE_LOGIN_FAILED;
+		response["data"] = "login failed";
+	}
+	std::string return_str = response.toStyledString();
 	session->Send(return_str, msg_id);//发送消息
 }
+
+
+//退出登录回调函数
+void LogicSystem::logoutCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+	Json::Reader reader;
+	Json::Value root;
+	Json::Value response;//返回消息
+	reader.parse(msg_data, root);
+	std::cout << "recevie msg id  is " << msg_id << " msg data is "
+		<< root["data"].asString() << endl;
+	std::cout<<"进入登出回调函数"<<endl;
+}
+
+
+// 添加好友业务回调
+void LogicSystem::addFriendCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+    Json::Reader reader;
+    Json::Value root;
+    Json::Value response;
+
+    reader.parse(msg_data, root);
+    std::cout << "Received message ID: " << msg_id << " Message data: " << root["data"].asString() << endl;
+    std::cout << "Entering add friend callback function" << endl;
+
+    /*
+        解析参数并执行添加好友的业务逻辑（待实现）
+        设置is_add_success的值
+    */
+
+    bool is_add_success = true;
+    /*
+        构造返回消息
+    */
+    if (is_add_success) {
+        response["code"] = CODE_ADD_FRIEND_SUCCESS;
+        response["data"] = "add friend success";
+    } else {
+        response["code"] = CODE_ADD_FRIEND_FAILED;
+        response["data"] = "add friend failed";
+    }
+
+    std::string return_str = response.toStyledString();
+    session->Send(return_str, msg_id); // 发送消息
+}
+
+
+void LogicSystem::oneChatCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+	Json::Reader reader;
+	Json::Value root;
+	Json::Value response;//返回消息
+	reader.parse(msg_data, root);
+	std::cout << "recevie msg id  is " << msg_id << " msg data is "
+		<< root["data"].asString() << endl;
+	std::cout<<"进入单聊回调函数"<<endl;
+}
+
+// 创建群组业务回调
+void LogicSystem::CreateGroupCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+    Json::Reader reader;
+    Json::Value root;
+    Json::Value response;
+
+    reader.parse(msg_data, root);
+    std::cout << "Received message ID: " << msg_id << " Message data: " << root["data"].asString() << endl;
+    std::cout << "Entering create group callback function" << endl;
+
+    /*
+        解析参数并执行创建群组的业务逻辑（待实现）
+        设置is_create_success的值
+    */
+    bool is_create_success = true;
+    /*
+        构造返回消息
+    */
+    if (is_create_success) {
+        response["code"] = CODE_CREATE_GROUP_SUCCESS;
+        response["data"] = "create group success";
+    } else {
+        response["code"] = CODE_CREATE_GROUP_FAILED;
+        response["data"] = "create group failed";
+    }
+
+    std::string return_str = response.toStyledString();
+    session->Send(return_str, msg_id); // 发送消息
+}
+
+// 加入群组业务回调
+void LogicSystem::JoinGroupCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+    Json::Reader reader;
+    Json::Value root;
+    Json::Value response;
+
+    reader.parse(msg_data, root);
+    std::cout << "Received message ID: " << msg_id << " Message data: " << root["data"].asString() << endl;
+    std::cout << "Entering join group callback function" << endl;
+
+
+	bool is_join_success = true;
+    /*
+        解析参数并执行加入群组的业务逻辑（待实现）
+        设置is_join_success的值
+    */
+    /*
+        构造返回消息
+    */
+    if (is_join_success) {
+        response["code"] = CODE_JOIN_GROUP_SUCCESS;
+        response["data"] = "join group success";
+    } else {
+        response["code"] = CODE_JOIN_GROUP_FAILED;
+        response["data"] = "join group failed";
+    }
+
+    std::string return_str = response.toStyledString();
+    session->Send(return_str, msg_id); // 发送消息
+}
+
+
+//群组聊天功能
+void LogicSystem::groupChatCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+	Json::Reader reader;
+	Json::Value root;
+	Json::Value response;//返回消息
+	reader.parse(msg_data, root);
+	std::cout << "recevie msg id  is " << msg_id << " msg data is "
+		<< root["data"].asString() << endl;
+	std::cout<<"进入群组聊天回调函数"<<endl;
+	
+
+}
+

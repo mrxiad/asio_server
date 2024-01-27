@@ -1,3 +1,0 @@
-/home/xiadong/asio_server/client/build/CMakeFiles/client.dir
-/home/xiadong/asio_server/client/build/CMakeFiles/edit_cache.dir
-/home/xiadong/asio_server/client/build/CMakeFiles/rebuild_cache.dir

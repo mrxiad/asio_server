@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Client</title>
+    <script type="text/javascript">
+        function startWebSocket() {
+            var ws = new WebSocket('ws://localhost:8080'); // 连接到WebSocket服务器
+            ws.binaryType = 'arraybuffer';
+
+            ws.onopen = function() {
+                console.log('WebSocket Client Connected');
+                const message = createMessage(1002, 'Hello, server!');
+                ws.send(message);
+            };
+
+            ws.onmessage = function(e) {
+                console.log("Received:", parseMessage(e.data));
+            };
+        }
+
+        function createMessage(id, dataString) {
+            const dataBuffer = new TextEncoder().encode(dataString);
+            const len = dataBuffer.byteLength;
+            const buffer = new ArrayBuffer(4 + len);
+            const view = new DataView(buffer);
+            view.setUint16(0, id, false); // ID
+            view.setUint16(2, len, false); // Length
+            new Uint8Array(buffer).set(dataBuffer, 4);
+            return buffer;
+        }
+
+        function parseMessage(data) {
+            const view = new DataView(data);
+            const id = view.getUint16(0, false);
+            const len = view.getUint16(2, false);
+            const content = new TextDecoder().decode(data.slice(4));
+            return { id, len, content };
+        }
+    </script>
+</head>
+<body onload="startWebSocket();">
+    <h1>WebSocket Client</h1>
+</body>
+</html>
