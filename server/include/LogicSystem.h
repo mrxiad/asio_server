@@ -24,11 +24,23 @@ public:
 
 	//session层调用，需要传递LogicNode
 	void PostMsgToQue(shared_ptr <LogicNode> msg);
+
+private:
+//注册消息函数
+	void RegisterCallBacks();
+
+	//处理hello_word类型的消息
+	void HelloWordCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理注册类型的消息
+	void RegisterCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
+	//处理登录消息
+	void LoginCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
+
 private:
 	LogicSystem();
 	void DealMsg();//入口，解耦合
-	void RegisterCallBacks();
-	void HelloWordCallBack(shared_ptr<CSession>, short msg_id, string msg_data);
 	std::thread _worker_thread;
 	std::queue<shared_ptr<LogicNode>> _msg_que;
 	std::mutex _mutex;//互斥锁

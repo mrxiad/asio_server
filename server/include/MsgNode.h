@@ -30,7 +30,12 @@ public:
     short _total_len;
     char* _data;
 };
-
+/*
+    _msg_id
+    _data
+    _total_len
+    _cur_len
+*/
 class RecvNode:public MsgNode
 {
     friend class LogicSystem;

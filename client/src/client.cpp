@@ -17,7 +17,7 @@ std::vector<thread> vec_threads;
 int main()
 {
 	auto start = std::chrono::high_resolution_clock::now(); // 获取开始时间
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 1; i++) {
 
 		//创建线程
 		vec_threads.emplace_back([]() {
@@ -34,14 +34,13 @@ int main()
 					return 0;
 				}
 				int i = 0;
-				while (i < 500) {
+				while (i < 5) {
 					Json::Value root;
-					root["id"] = 1001;
 					root["data"] = "hello world";
 					std::string request = root.toStyledString();
 					size_t request_length = request.length();
 					char send_data[MAX_LENGTH] = { 0 };
-					int msgid = 1001;
+					int msgid = 1002;//注册消息
 					int msgid_host = boost::asio::detail::socket_ops::host_to_network_short(msgid);
 					memcpy(send_data, &msgid_host, 2);
 					//转为网络字节序
@@ -54,6 +53,7 @@ int main()
 					char reply_head[HEAD_TOTAL];
 					size_t reply_length = boost::asio::read(sock, boost::asio::buffer(reply_head, HEAD_TOTAL));
 
+					//先读取头部
 					msgid = 0;
 					memcpy(&msgid, reply_head, HEAD_LENGTH);
 					short msglen = 0;
@@ -61,18 +61,22 @@ int main()
 					//转为本地字节序
 					msglen = boost::asio::detail::socket_ops::network_to_host_short(msglen);
 					msgid = boost::asio::detail::socket_ops::network_to_host_short(msgid);
+
+					//再读取消息体
 					char msg[MAX_LENGTH] = { 0 };
 					size_t  msg_length = boost::asio::read(sock, boost::asio::buffer(msg, msglen));
 					Json::Reader reader;
 					reader.parse(std::string(msg, msg_length), root);
-					std::cout << "msg id is " << root["id"] << " msg is " << root["data"] << endl;
+					std::cout<<"receive msg id is "<<msgid<<" msg data is "<<root["data"].asString()<<endl;
 					i++;
 				}
+				return 0;
 			}
 			catch (std::exception& e) {
 				std::cerr << "Exception: " << e.what() << endl;
 			}
-			});
+			return 0;
+		});
 		
 		//线程之间睡眠10ms
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));

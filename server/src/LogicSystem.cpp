@@ -57,26 +57,77 @@ void LogicSystem::DealMsg() {
 			_msg_que.pop();
 			continue;
 		}
+
+		/*
+			注意这里调用了回调函数（session，id，data），这里的data是recvnode的data，纯消息体
+		*/
 		call_back_iter->second(msg_node->_session, msg_node->_recvnode->_msg_id, 
 			std::string(msg_node->_recvnode->_data, msg_node->_recvnode->_cur_len));
 		_msg_que.pop();
 	}
 }
 
-//注册回调函数
 void LogicSystem::RegisterCallBacks() {
-	_fun_callbacks[MSG_HELLO_WORD] = std::bind(&LogicSystem::HelloWordCallBack, this,
-		placeholders::_1, placeholders::_2, placeholders::_3);
-}
 
-//解析数据，发送给客户端
+	//注册hello_word类型的消息
+	_fun_callbacks.insert(make_pair(MSG_HELLO_WORD, std::bind(&LogicSystem::HelloWordCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+
+	//注册类型的消息
+	_fun_callbacks.insert(make_pair(MSG_REGISTER, std::bind(&LogicSystem::RegisterCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+
+	//注册登录消息
+	_fun_callbacks.insert(make_pair(MSG_LOGIN, std::bind(&LogicSystem::LoginCallBack, this,
+		placeholders::_1, placeholders::_2, placeholders::_3)));
+}
+/*
+	以下是注册回调函数，注意：需要session，id，data
+	-session是需要知道客户端
+	-id是消息类型，用于send
+	-data是纯消息体（json）
+*/
+
+
+//hello_word
 void LogicSystem::HelloWordCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
 	Json::Value root;
 	reader.parse(msg_data, root);
 	std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
 		<< root["data"].asString() << endl;
+	std::cout<<"进入hello_word回调函数"<<endl;
+	//需要在这里构造回复的消息
 	root["data"] = "server has received msg, msg data is " + root["data"].asString();
 	std::string return_str = root.toStyledString();
-	session->Send(return_str, root["id"].asInt());//发送消息
+	session->Send(return_str, msg_id);//发送消息
+}
+
+
+//注册
+void LogicSystem::RegisterCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+	std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
+		<< root["data"].asString() << endl;
+	std::cout<<"进入注册回调函数"<<endl;
+	//需要在这里构造回复的消息
+	root["data"] = "server has received msg, msg data is " + root["data"].asString();
+	std::string return_str = root.toStyledString();
+	session->Send(return_str, msg_id);//发送消息
+}
+
+//登录
+void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+	std::cout << "recevie msg id  is " << root["id"].asInt() << " msg data is "
+		<< root["data"].asString() << endl;
+	std::cout<<"进入登录回调函数"<<endl;
+	//需要在这里构造回复的消息
+	root["data"] = "server has received msg, msg data is " + root["data"].asString();
+	std::string return_str = root.toStyledString();
+	session->Send(return_str, msg_id);//发送消息
 }

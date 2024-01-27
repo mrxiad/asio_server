@@ -44,6 +44,9 @@ private:
 };
 
 
+/*
+	注意，这里的recvnode的id，len，data分别处理了
+*/
 class LogicNode {
     friend class LogicSystem;
 public:
