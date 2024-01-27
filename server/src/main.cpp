@@ -5,40 +5,36 @@
 #include <csignal>
 #include <thread>
 #include <mutex>
+#include "AsioIOServicePool.h"
 using namespace std;
 bool bstop = false;
 std::condition_variable cond_quit;
 std::mutex mutex_quit;
-void sig_handler(int sig)//实现优雅退出
-{
-	if (sig == SIGINT||sig == SIGTERM)
-	{
-		std::unique_lock<std::mutex>  lock_quit(mutex_quit);
-		bstop = true;
-		lock_quit.unlock();
-		cond_quit.notify_one();
-	}
-}
 
 int main()
 {
 	try {
+		//获取连接池
+		auto pool = AsioIOServicePool::GetInstance();
+		//定义上下文，给acceptor使用
 		boost::asio::io_service  io_service;
-		std::thread  net_work_thread([&io_service] {
-			CServer s(io_service, 10086);
-			io_service.run();
-			});
-		signal(SIGINT, sig_handler);
-		while (!bstop) {
-			std::unique_lock<std::mutex>  lock_quit(mutex_quit);
-			cond_quit.wait(lock_quit);
-		}
-		io_service.stop();
-		net_work_thread.join();
 
+		//注册信号
+		boost::asio::signal_set signals(io_service, SIGINT, SIGTERM);
+
+		//注册信号回调
+		signals.async_wait([&io_service,pool](auto, auto) {
+			io_service.stop();
+			pool->Stop();
+			});
+
+		//启动逻辑线程
+		CServer s(io_service, 10086);
+		//启动逻辑线程
+		io_service.run();
 	}
 	catch (std::exception& e) {
 		std::cerr << "Exception: " << e.what() << endl;
 	}
-	
+
 }

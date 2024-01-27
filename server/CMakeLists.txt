@@ -5,6 +5,9 @@ file(GLOB SERVER_SOURCES "src/*.cpp")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(server ${SERVER_SOURCES})
+
+
+# 添加头文件搜索路径
 target_include_directories(server PUBLIC include)
 
 # 查找 Boost 库

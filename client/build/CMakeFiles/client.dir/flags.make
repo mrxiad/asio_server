@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/xiadong/date_homework/client/include
+CXX_INCLUDES = -I/home/xiadong/asio_server/client/include
 
 CXX_FLAGS = 
 

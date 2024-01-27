@@ -21,6 +21,8 @@ class LogicSystem:public Singleton<LogicSystem>
 	friend class Singleton<LogicSystem>;
 public:
 	~LogicSystem();
+
+	//session层调用，需要传递LogicNode
 	void PostMsgToQue(shared_ptr <LogicNode> msg);
 private:
 	LogicSystem();

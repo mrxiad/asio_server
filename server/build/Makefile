@@ -57,10 +57,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/xiadong/date_homework/server
+CMAKE_SOURCE_DIR = /home/xiadong/asio_server/server
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/xiadong/date_homework/server/build
+CMAKE_BINARY_DIR = /home/xiadong/asio_server/server/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/xiadong/date_homework/server/build/CMakeFiles /home/xiadong/date_homework/server/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xiadong/asio_server/server/build/CMakeFiles /home/xiadong/asio_server/server/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/xiadong/date_homework/server/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/xiadong/asio_server/server/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,30 @@ server: cmake_check_build_system
 server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
 .PHONY : server/fast
+
+src/AsioIOServicePool.o: src/AsioIOServicePool.cpp.o
+.PHONY : src/AsioIOServicePool.o
+
+# target to build an object file
+src/AsioIOServicePool.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/AsioIOServicePool.cpp.o
+.PHONY : src/AsioIOServicePool.cpp.o
+
+src/AsioIOServicePool.i: src/AsioIOServicePool.cpp.i
+.PHONY : src/AsioIOServicePool.i
+
+# target to preprocess a source file
+src/AsioIOServicePool.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/AsioIOServicePool.cpp.i
+.PHONY : src/AsioIOServicePool.cpp.i
+
+src/AsioIOServicePool.s: src/AsioIOServicePool.cpp.s
+.PHONY : src/AsioIOServicePool.s
+
+# target to generate assembly for a file
+src/AsioIOServicePool.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/AsioIOServicePool.cpp.s
+.PHONY : src/AsioIOServicePool.cpp.s
 
 src/CServer.o: src/CServer.cpp.o
 .PHONY : src/CServer.o
@@ -258,6 +282,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... server"
+	@echo "... src/AsioIOServicePool.o"
+	@echo "... src/AsioIOServicePool.i"
+	@echo "... src/AsioIOServicePool.s"
 	@echo "... src/CServer.o"
 	@echo "... src/CServer.i"
 	@echo "... src/CServer.s"

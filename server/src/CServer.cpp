@@ -1,7 +1,7 @@
 #include "CServer.h"
 #include "CSession.h"
 #include <iostream>
-
+#include"AsioIOServicePool.h"
 CServer::CServer(boost::asio::io_service& io_service, short port):_io_service(io_service), _port(port),
 _acceptor(io_service, tcp::endpoint(tcp::v4(),port))
 {
@@ -22,7 +22,14 @@ void CServer::HandleAccept(shared_ptr<CSession> new_session, const boost::system
 }
 
 void CServer::StartAccept() {
-	shared_ptr<CSession> new_session = std::make_shared<CSession>(_io_service, this);
+
+	//获取context
+	auto &io_context = AsioIOServicePool::GetInstance()->GetIOService();
+
+	//创建新的session
+	shared_ptr<CSession> new_session = make_shared<CSession>(io_context, this);
+
+	//异步接受连接
 	_acceptor.async_accept(new_session->GetSocket(), std::bind(&CServer::HandleAccept, this, new_session, placeholders::_1));
 }
 

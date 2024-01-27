@@ -8,11 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/xiadong/date_homework/server/src/CServer.cpp" "CMakeFiles/server.dir/src/CServer.cpp.o" "gcc" "CMakeFiles/server.dir/src/CServer.cpp.o.d"
-  "/home/xiadong/date_homework/server/src/CSession.cpp" "CMakeFiles/server.dir/src/CSession.cpp.o" "gcc" "CMakeFiles/server.dir/src/CSession.cpp.o.d"
-  "/home/xiadong/date_homework/server/src/LogicSystem.cpp" "CMakeFiles/server.dir/src/LogicSystem.cpp.o" "gcc" "CMakeFiles/server.dir/src/LogicSystem.cpp.o.d"
-  "/home/xiadong/date_homework/server/src/MsgNode.cpp" "CMakeFiles/server.dir/src/MsgNode.cpp.o" "gcc" "CMakeFiles/server.dir/src/MsgNode.cpp.o.d"
-  "/home/xiadong/date_homework/server/src/main.cpp" "CMakeFiles/server.dir/src/main.cpp.o" "gcc" "CMakeFiles/server.dir/src/main.cpp.o.d"
+  "/home/xiadong/asio_server/server/src/AsioIOServicePool.cpp" "CMakeFiles/server.dir/src/AsioIOServicePool.cpp.o" "gcc" "CMakeFiles/server.dir/src/AsioIOServicePool.cpp.o.d"
+  "/home/xiadong/asio_server/server/src/CServer.cpp" "CMakeFiles/server.dir/src/CServer.cpp.o" "gcc" "CMakeFiles/server.dir/src/CServer.cpp.o.d"
+  "/home/xiadong/asio_server/server/src/CSession.cpp" "CMakeFiles/server.dir/src/CSession.cpp.o" "gcc" "CMakeFiles/server.dir/src/CSession.cpp.o.d"
+  "/home/xiadong/asio_server/server/src/LogicSystem.cpp" "CMakeFiles/server.dir/src/LogicSystem.cpp.o" "gcc" "CMakeFiles/server.dir/src/LogicSystem.cpp.o.d"
+  "/home/xiadong/asio_server/server/src/MsgNode.cpp" "CMakeFiles/server.dir/src/MsgNode.cpp.o" "gcc" "CMakeFiles/server.dir/src/MsgNode.cpp.o.d"
+  "/home/xiadong/asio_server/server/src/main.cpp" "CMakeFiles/server.dir/src/main.cpp.o" "gcc" "CMakeFiles/server.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

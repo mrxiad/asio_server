@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/server.dir/src/AsioIOServicePool.cpp.o"
+  "CMakeFiles/server.dir/src/AsioIOServicePool.cpp.o.d"
   "CMakeFiles/server.dir/src/CServer.cpp.o"
   "CMakeFiles/server.dir/src/CServer.cpp.o.d"
   "CMakeFiles/server.dir/src/CSession.cpp.o"
