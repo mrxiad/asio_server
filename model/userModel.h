@@ -80,7 +80,7 @@ public:
             std::cout << "数据库连接失败" << std::endl;
             return false;
         }
-        std::cout << "更新用户状态" << std::endl;
+        std::cout << "更新用户状态为" << user.getId() <<" "<< user.getState() <<" "<< user.getUuid() << std::endl;
         sqlstatement stmt(&conn);
         char state[10];
         char uuid[50];

@@ -1,6 +1,7 @@
 #include "LogicSystem.h"
 #include "string"
 #include "code.h"
+#include "CServer.h"
 using namespace std;
 
 LogicSystem::LogicSystem():_b_stop(false){
@@ -82,7 +83,7 @@ void LogicSystem::RegisterCallBacks() {
 	_fun_callbacks.insert(make_pair(MSG_LOGIN, std::bind(&LogicSystem::LoginCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
-	//登出消息
+	//退出消息
 	_fun_callbacks.insert(make_pair(MSG_LOGOUT, std::bind(&LogicSystem::logoutCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
@@ -233,14 +234,17 @@ void LogicSystem::logoutCallBack(shared_ptr<CSession> session, short msg_id, str
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
 	std::cout<<"进入退出回调函数"<<endl;
+	std::cout<<root<<endl;
 	
 	//需要在这里构造回复的消息
 	response["code"] = CODE_LOGOUT_SUCCESS;
 	response["msg"] = "logout success";
 	std::string return_str = response.toStyledString();
 	session->Send(return_str, msg_id);//发送消息
-	//设置用户状态为离线
-	User user(root["id"].asInt(), "", "", "offline");
+	
+	//设置用户状态为离线，清空uuid
+
+	User user(stoi(root["id"].asString()), "", "", "offline","");
 	_user_model.updateState(user);
 	//此时对端肯定会关闭连接，服务器不需要处理
 }
@@ -287,14 +291,60 @@ void LogicSystem::addFriendCallBack(shared_ptr<CSession> session, short msg_id, 
 }
 
 
+//一对一聊天，会根据uuid调用服务器的session的send，将消息直接回传给客户端session
 void LogicSystem::oneChatCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
 	Json::Value root;
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << msg_id << " msg data is "
-		<< root["data"].asString() << endl;
 	std::cout<<"进入单聊回调函数"<<endl;
+	std::cout<<root<<std::endl;
+	/*
+        1.获取对方的id和消息内容，直接将本人json发过去
+        2.如果对方在本机，直接发，return
+        3.不在线发送离线消息（todo）
+    */
+	string toid_str=root["toid"].asString();
+	int toid=stoi(toid_str);
+	User user;
+	{
+		//加锁(确保server中有toid的session)
+		unique_lock<mutex> lk(_sessionMutex);
+		user=_user_model.query(toid);
+		if(user.getId()==-1){//查询失败
+			lk.unlock();//解锁
+			response["code"] = CODE_ONE_CHAT_FAILED;
+			response["msg"] = "one chat failed";
+			std::string return_str = response.toStyledString();
+			session->Send(return_str, msg_id);//发送消息
+			return;
+		}else{
+			if(user.getState()=="online"){//在线
+				//给对方客户端发送消息
+				{
+					const auto& to_session=session->GetServer()->GetSession(user.getUuid());
+					if(to_session!=nullptr){
+						to_session->Send(msg_data, msg_id);
+					}
+					lk.unlock();//解锁
+				}
+				//构造返回消息
+				response["code"] = CODE_ONE_CHAT_SUCCESS;
+				response["msg"] = "one chat success";
+				std::string return_str = response.toStyledString();
+				session->Send(return_str, msg_id);//给当前客户端发送消息
+			}else{//对方离线
+				//发送离线消息
+				//todo，省略
+				lk.unlock();
+				response["code"] = CODE_ONE_CHAT_FAILED;
+				response["msg"] = "one chat failed";
+				std::string return_str = response.toStyledString();
+				session->Send(return_str, msg_id);//给当前客户端发送消息
+				return;
+			}
+		}
+	}
 }
 
 // 创建群组业务回调

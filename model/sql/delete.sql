@@ -1,0 +1,2 @@
+DELETE FROM Friend;
+DELETE FROM User;

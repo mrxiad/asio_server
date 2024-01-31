@@ -63,7 +63,8 @@ private:
 	void DealMsg();//入口，解耦合
 	std::thread _worker_thread;
 	std::queue<shared_ptr<LogicNode>> _msg_que;
-	std::mutex _mutex;//互斥锁
+	std::mutex _mutex;//互斥锁(保护队列)
+	std::mutex _sessionMutex;//互斥锁(保护session)
 	std::condition_variable _consume;//条件变量
 	bool _b_stop;//是否停止
 	std::map<short, FunCallBack> _fun_callbacks;//消息id和回调函数的映射

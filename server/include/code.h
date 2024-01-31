@@ -14,6 +14,8 @@ enum{
     CODE_CREATE_GROUP_FAILED,       //创建群组失败
     CODE_JOIN_GROUP_SUCCESS,        //加入群组成功
     CODE_JOIN_GROUP_FAILED,         //加入群组失败
+    CODE_ONE_CHAT_SUCCESS,          //一对一聊天成功
+    CODE_ONE_CHAT_FAILED,           //一对一聊天失败
 };
 
 

@@ -62,6 +62,10 @@ int main() {
                 case 3: // 退出
                     {
                         msgid = 1004; // 退出接口的 msgid
+                        string id;
+                        cout << "请输入用户ID: ";
+                        cin >> id;
+                        root["id"] = id;
                         break;
                     }
 				case 4: // 添加好友

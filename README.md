@@ -1,5 +1,4 @@
-# date_homework
-Homework
+# 本项目是基于asio搭建的网络聊天室
 
 ## ubuntu下载boost库
 
