@@ -15,6 +15,7 @@
 #include <json/value.h>
 #include <json/reader.h>
 #include "userModel.h"
+#include "friendModel.h"
 
 typedef function<void(shared_ptr<CSession>, short msg_id, string msg_data)> FunCallBack;
 class LogicSystem:public Singleton<LogicSystem>
@@ -70,6 +71,7 @@ private:
 
 	//操作用户表的对象
 	UserModel _user_model;
+	FriendModel _friend_model;
 	
 };
 

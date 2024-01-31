@@ -14,8 +14,9 @@ std::mutex mutex_quit;
 int main()
 {
 	try {
-		//获取连接池
+		//获取连接池,单例模式，这里面的io_service是直接给session的
 		auto pool = AsioIOServicePool::GetInstance();
+
 		//定义上下文，给acceptor使用
 		boost::asio::io_service  io_service;
 

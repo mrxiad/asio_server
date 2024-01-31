@@ -253,24 +253,33 @@ void LogicSystem::addFriendCallBack(shared_ptr<CSession> session, short msg_id, 
     Json::Value response;
 
     reader.parse(msg_data, root);
-    std::cout << "Received message ID: " << msg_id << " Message data: " << root["data"].asString() << endl;
-    std::cout << "Entering add friend callback function" << endl;
-
+    std::cout << "添加好友回调" << endl;
+	std::cout<<root<<endl;
     /*
-        解析参数并执行添加好友的业务逻辑（待实现）
-        设置is_add_success的值
+        id:用户id
+	    friendid:好友id
     */
 
-    bool is_add_success = true;
+    string id_str=root["id"].asString();
+	string friendid_str=root["friendid"].asString();
+	int id=stoi(id_str);
+	int friendid=stoi(friendid_str);
+    
     /*
-        构造返回消息
-    */
+		操作数据库
+	*/
+	bool is_add_success = true;
+	is_add_success = _friend_model.insert(id, friendid);
+
+	/*
+		返回结果
+	*/
     if (is_add_success) {
         response["code"] = CODE_ADD_FRIEND_SUCCESS;
-        response["data"] = "add friend success";
+        response["msg"] = "add friend success";
     } else {
         response["code"] = CODE_ADD_FRIEND_FAILED;
-        response["data"] = "add friend failed";
+        response["msg"] = "add friend failed";
     }
 
     std::string return_str = response.toStyledString();

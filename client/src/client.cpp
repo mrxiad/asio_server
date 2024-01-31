@@ -25,9 +25,9 @@ int main() {
         }
 
         while (true) {
-            cout << "请输入要执行的操作（1: 注册, 2: 登录, 3: 退出）: ";
-            int operation;
-            cin >> operation;
+            cout << "请输入要执行的操作（1: 注册, 2: 登录, 3: 退出, 4: 添加好友）: ";
+			int operation;
+			cin >> operation;
 
             Json::Value root;
             int msgid;
@@ -64,6 +64,18 @@ int main() {
                         msgid = 1004; // 退出接口的 msgid
                         break;
                     }
+				case 4: // 添加好友
+					{
+						string userid, friendid;
+						cout << "请输入您的用户ID: ";
+						cin >> userid;
+						cout << "请输入要添加的好友ID: ";
+						cin >> friendid;
+						root["id"] = userid;
+						root["friendid"] = friendid;
+						msgid = 1005; // 添加好友接口的 msgid
+						break;
+					}
                 default:
                     cout << "无效的操作！" << endl;
                     continue;
