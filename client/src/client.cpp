@@ -1,95 +1,110 @@
-﻿// SyncClient.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-
-#include <iostream>
+﻿#include <iostream>
 #include <boost/asio.hpp>
-#include<string>
-#include <thread>
-#include<fstream>
+#include <string>
+#include <fstream>
 #include <json/json.h>
+
 using namespace std;
+using namespace boost::asio;
 using namespace boost::asio::ip;
+
 const int MAX_LENGTH = 1024 * 2;
 const int HEAD_LENGTH = 2;
 const int HEAD_TOTAL = 4;
 
-std::vector<thread> vec_threads;
-int main()
-{
-	auto start = std::chrono::high_resolution_clock::now(); // 获取开始时间
-	for (int i = 0; i < 1; i++) {
+int main() {
+    try {
+        io_service ioc;
+        tcp::endpoint remote_ep(ip::address::from_string("127.0.0.1"), 10086);
+        tcp::socket sock(ioc);
+        boost::system::error_code error = boost::asio::error::host_not_found;
+        sock.connect(remote_ep, error);
+        if (error) {
+            cout << "连接失败: " << error.message() << "\n";
+            return 0;
+        }
 
-		//创建线程
-		vec_threads.emplace_back([]() {
-			try {
-				//创建上下文服务
-				boost::asio::io_service ioc;
-				//构造endpoint
-				tcp::endpoint  remote_ep(address::from_string("127.0.0.1"), 10086);
-				tcp::socket  sock(ioc);
-				boost::system::error_code   error = boost::asio::error::host_not_found; ;
-				sock.connect(remote_ep, error);
-				if (error) {
-					cout << "connect failed, code is " << error.value() << " error msg is " << error.message();
-					return 0;
-				}
-				int i = 0;
-				while (i < 5) {
-					Json::Value root;
-					root["data"] = "hello world";
-					std::string request = root.toStyledString();
-					size_t request_length = request.length();
-					char send_data[MAX_LENGTH] = { 0 };
-					int msgid = 1002;//注册消息
-					int msgid_host = boost::asio::detail::socket_ops::host_to_network_short(msgid);
-					memcpy(send_data, &msgid_host, 2);
-					//转为网络字节序
-					int request_host_length = boost::asio::detail::socket_ops::host_to_network_short(request_length);
-					memcpy(send_data + 2, &request_host_length, 2);
-					memcpy(send_data + 4, request.c_str(), request_length);
-					boost::asio::write(sock, boost::asio::buffer(send_data, request_length + 4));
-					cout << "begin to receive..." << endl;
+        while (true) {
+            cout << "请输入要执行的操作（1: 注册, 2: 登录, 3: 退出）: ";
+            int operation;
+            cin >> operation;
 
-					char reply_head[HEAD_TOTAL];
-					size_t reply_length = boost::asio::read(sock, boost::asio::buffer(reply_head, HEAD_TOTAL));
+            Json::Value root;
+            int msgid;
+            switch (operation) {
+                case 1: // 注册
+                    {
+                        string username, password;
+                        cout << "请输入用户名: ";
+                        cin >> username;
+                        cout << "请输入密码: ";
+                        cin >> password;
+                        root["username"] = username;
+                        root["password"] = password;
+                        msgid = 1002; // 注册接口的 msgid
+                        break;
+                    }
+                case 2: // 登录
+                    {
+                        string id, username, password;
+                        cout << "请输入用户ID: ";
+                        cin >> id;
+                        cout << "请输入用户名: ";
+                        cin >> username;
+                        cout << "请输入密码: ";
+                        cin >> password;
+                        root["id"] = id;
+                        root["username"] = username;
+                        root["password"] = password;
+                        msgid = 1003; // 登录接口的 msgid
+                        break;
+                    }
+                case 3: // 退出
+                    {
+                        msgid = 1004; // 退出接口的 msgid
+                        break;
+                    }
+                default:
+                    cout << "无效的操作！" << endl;
+                    continue;
+            }
 
-					//先读取头部
-					msgid = 0;
-					memcpy(&msgid, reply_head, HEAD_LENGTH);
-					short msglen = 0;
-					memcpy(&msglen, reply_head + 2, HEAD_LENGTH);
-					//转为本地字节序
-					msglen = boost::asio::detail::socket_ops::network_to_host_short(msglen);
-					msgid = boost::asio::detail::socket_ops::network_to_host_short(msgid);
+            string request = root.toStyledString();
+            size_t request_length = request.length();
+            char send_data[MAX_LENGTH] = {0};
 
-					//再读取消息体
-					char msg[MAX_LENGTH] = { 0 };
-					size_t  msg_length = boost::asio::read(sock, boost::asio::buffer(msg, msglen));
-					Json::Reader reader;
-					reader.parse(std::string(msg, msg_length), root);
-					std::cout<<"receive msg id is "<<msgid<<" msg data is "<<root["data"].asString()<<endl;
-					i++;
-				}
-				return 0;
-			}
-			catch (std::exception& e) {
-				std::cerr << "Exception: " << e.what() << endl;
-			}
-			return 0;
-		});
-		
-		//线程之间睡眠10ms
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
+            // 设置 msgid 和 length
+            int msgid_host = boost::asio::detail::socket_ops::host_to_network_short(msgid);
+            memcpy(send_data, &msgid_host, HEAD_LENGTH);
+            int request_host_length = boost::asio::detail::socket_ops::host_to_network_short(request_length);
+            memcpy(send_data + HEAD_LENGTH, &request_host_length, HEAD_LENGTH);
+            memcpy(send_data + HEAD_TOTAL, request.c_str(), request_length);
+            write(sock, buffer(send_data, request_length + HEAD_TOTAL));
 
-	for (auto& t : vec_threads) {
-		t.join();
-	}
-	// 执行一些需要计时的操作
-	auto end = std::chrono::high_resolution_clock::now(); // 获取结束时间
+            cout << "正在接收响应..." << endl;
+            char reply_head[HEAD_TOTAL];
+            size_t reply_length = read(sock, buffer(reply_head, HEAD_TOTAL));
 
-	auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start); // 计算时间差，单位为微秒
-	std::cout << "Time spent: " << duration.count() << " seconds." << std::endl; // 输
-	getchar();
-	return 0;
+            // 读取头部
+            memcpy(&msgid, reply_head, HEAD_LENGTH);
+            short msglen;
+            memcpy(&msglen, reply_head + HEAD_LENGTH, HEAD_LENGTH);
+            msglen = boost::asio::detail::socket_ops::network_to_host_short(msglen);
+            msgid = boost::asio::detail::socket_ops::network_to_host_short(msgid);
+
+            // 读取消息体
+            char msg[MAX_LENGTH] = {0};
+            size_t msg_length = read(sock, buffer(msg, msglen));
+            Json::Reader reader;
+            Json::Value response;
+            reader.parse(string(msg, msg_length), response);
+            cout << "收到消息 ID: " << msgid << ", 数据: " << response.toStyledString() << endl;
+
+            if (operation == 3) break; // 退出操作
+        }
+    } catch (exception& e) {
+        cerr << "异常: " << e.what() << "\n";
+        return 1;
+    }
+    return 0;
 }

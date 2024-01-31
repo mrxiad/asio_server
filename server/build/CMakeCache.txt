@@ -236,6 +236,9 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Path to a library.
+MYSQL_CLIENT:FILEPATH=/usr/lib/x86_64-linux-gnu/libmysqlclient.so
+
 //Value Computed by CMake
 YourProjectName_BINARY_DIR:STATIC=/home/xiadong/asio_server/server/build
 

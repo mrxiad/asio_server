@@ -1,16 +1,10 @@
-# Ignore build folders
-/build
-/client/build
-/server/build
+# Ignore all build directories recursively
+**/build/
 
 # Ignore Node.js modules
-/node_modules
 /front/node_modules
 
 # Ignore binary executables
 /bin
 
-# Ignore Python scripts
-client.py
-create_project.py
-
+/.vscode

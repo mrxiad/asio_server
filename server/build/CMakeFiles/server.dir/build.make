@@ -177,6 +177,7 @@ server: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 server: /home/xiadong/asio_server/server/../3rdParty/json/lib/libjsoncpp.so
 server: /home/xiadong/asio_server/server/../lib/lib_public.so
 server: /home/xiadong/asio_server/server/../lib/lib_mysql.so
+server: /usr/lib/x86_64-linux-gnu/libmysqlclient.so
 server: CMakeFiles/server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/xiadong/asio_server/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/server.dir/link.txt --verbose=$(VERBOSE)

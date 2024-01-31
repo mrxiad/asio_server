@@ -74,35 +74,35 @@ void LogicSystem::RegisterCallBacks() {
 	_fun_callbacks.insert(make_pair(MSG_HELLO_WORD, std::bind(&LogicSystem::HelloWordCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
-	//注册类型的消息
+	//注册消息
 	_fun_callbacks.insert(make_pair(MSG_REGISTER, std::bind(&LogicSystem::RegisterCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
-	//注册登录消息
+	//登录消息
 	_fun_callbacks.insert(make_pair(MSG_LOGIN, std::bind(&LogicSystem::LoginCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
-	//注册登出消息
+	//登出消息
 	_fun_callbacks.insert(make_pair(MSG_LOGOUT, std::bind(&LogicSystem::logoutCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
-	//注册添加好友消息
+	//添加好友消息
 	_fun_callbacks.insert(make_pair(MSG_ADD_FRIEND, std::bind(&LogicSystem::addFriendCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
-	//注册一对一聊天消息
+	//一对一聊天消息
 	_fun_callbacks.insert(make_pair(MSG_ONE_CHAT, std::bind(&LogicSystem::oneChatCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 	
-	//注册加入群组消息
+	//加入群组消息
 	_fun_callbacks.insert(make_pair(MSG_JOIN_GROUP, std::bind(&LogicSystem::JoinGroupCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 	
-	//注册创建群组消息
+	//创建群组消息
 	_fun_callbacks.insert(make_pair(MSG_CREATE_GROUP, std::bind(&LogicSystem::CreateGroupCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 	
-	//注册群组聊天消息
+	//群组聊天消息
 	_fun_callbacks.insert(make_pair(MSG_GROUP_CHAT, std::bind(&LogicSystem::groupChatCallBack, this,
 		placeholders::_1, placeholders::_2, placeholders::_3)));
 
@@ -159,7 +159,7 @@ void LogicSystem::RegisterCallBack(shared_ptr<CSession> session, short msg_id, s
 
 	if(is_insert_success){
 		response["code"] = CODE_REGISTER_SUCCESS;
-		response['id']=user.getId();
+		response["id"]=user.getId();
 		response["msg"] = "register success";
 	}
 	else {
@@ -176,12 +176,13 @@ void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, stri
 	Json::Value root;
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout<<"进入登录回调函数"<<endl;
-
+	std::cout<<"进入登录回调函数"<<std::endl;
+	std::cout<<root<<endl;
 	/*
 		获取id,用户名,密码
 	*/
-	int id=root["id"].asInt();
+	string id_str=root["id"].asString();
+	int id=stoi(id_str);
 	std::string username = root["username"].asString();
 	std::string password = root["password"].asString();
 	/*
@@ -204,8 +205,13 @@ void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, stri
 	*/
 	
 	if(is_login_success){//登录成功
-		//设置用户状态为在线
+		
+		//设置用户状态为在线,并且设置uuid
 		user.setState("online");
+		std::cout<<"设置用户的uuid:"<<session->GetUuid()<<endl;
+		user.setUuid(session->GetUuid());
+
+		//更新数据库
 		_user_model.updateState(user);
 
 		response["code"] = CODE_LOGIN_SUCCESS;
@@ -220,17 +226,17 @@ void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, stri
 }
 
 
-//退出登录回调函数
+//退出回调函数
 void LogicSystem::logoutCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
 	Json::Value root;
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout<<"进入登出回调函数"<<endl;
+	std::cout<<"进入退出回调函数"<<endl;
 	
 	//需要在这里构造回复的消息
 	response["code"] = CODE_LOGOUT_SUCCESS;
-	response["data"] = "logout success";
+	response["msg"] = "logout success";
 	std::string return_str = response.toStyledString();
 	session->Send(return_str, msg_id);//发送消息
 	//设置用户状态为离线

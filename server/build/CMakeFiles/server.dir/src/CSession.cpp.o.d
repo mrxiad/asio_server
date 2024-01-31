@@ -1011,7 +1011,7 @@ CMakeFiles/server.dir/src/CSession.cpp.o: \
  /usr/local/include/json/reader.h \
  /home/xiadong/asio_server/server/../model/userModel.h \
  /home/xiadong/asio_server/server/../model/./include/user.h \
- /home/xiadong/asio_server/server/../public/db/_mysql.h \
+ /home/xiadong/asio_server/server/../model/../public/db/_mysql.h \
  /usr/include/mysql/mysql.h /usr/include/mysql/mysql_version.h \
  /usr/include/mysql/mysql_com.h /usr/include/mysql/binary_log_types.h \
  /usr/include/mysql/my_command.h /usr/include/mysql/mysql_time.h \
