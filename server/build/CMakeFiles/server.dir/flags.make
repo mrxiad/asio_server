@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/xiadong/asio_server/server/include
+CXX_INCLUDES = -I/home/xiadong/asio_server/server/include -I/home/xiadong/asio_server/server/../public/db -I/home/xiadong/asio_server/server/../public -I/home/xiadong/asio_server/server/../model -I/usr/include/mysql
 
 CXX_FLAGS = -std=gnu++17
 

@@ -114,7 +114,9 @@ void LogicSystem::RegisterCallBacks() {
 	-data是纯消息体（json）
 */
 
-
+/*
+	注意，一旦进入回调函数，server中一定会有这个session，直到读写发生错误（对端关闭连接），或者实现退出业务，主动删除session
+*/
 //hello_word
 void LogicSystem::HelloWordCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
@@ -136,10 +138,8 @@ void LogicSystem::RegisterCallBack(shared_ptr<CSession> session, short msg_id, s
 	Json::Value root;
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << msg_id<< " msg data is "
-		<< root["data"].asString() << endl;
+	
 	std::cout<<"进入注册回调函数"<<endl;
-	//需要在这里构造回复的消息
 	
 	/*
         获取用户名和密码然后插入数据库
@@ -147,26 +147,24 @@ void LogicSystem::RegisterCallBack(shared_ptr<CSession> session, short msg_id, s
     */
     std::string username = root["username"].asString();
 	std::string password = root["password"].asString();
-
 	std::cout<<"获取到的用户名是"<<username<<endl;
 	std::cout<<"获取到的密码是"<<password<<endl;
 	
-	bool is_insert_success = true;
-	/*
-		插入数据库(等待实现)
-		返回是否插入成功
-	*/
+	User user;
+	user.setName(username);
+	user.setPassword(password);
 
-	/*
-		构造返回消息
-	*/
+	bool is_insert_success = true;
+	is_insert_success = _user_model.insert(user);//插入数据库
+
 	if(is_insert_success){
 		response["code"] = CODE_REGISTER_SUCCESS;
-		response["data"] = "register success";
+		response['id']=user.getId();
+		response["msg"] = "register success";
 	}
 	else {
 		response["code"] = CODE_REGISTER_FAILED;
-		response["data"] = "register failed";
+		response["msg"] = "register failed";
 	}
 	std::string return_str = response.toStyledString();
 	session->Send(return_str, msg_id);//发送消息
@@ -178,34 +176,44 @@ void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, stri
 	Json::Value root;
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << msg_id << " msg data is "
-		<< root["data"].asString() << endl;
 	std::cout<<"进入登录回调函数"<<endl;
-	
 
 	/*
-		获取用户名和密码
+		获取id,用户名,密码
 	*/
+	int id=root["id"].asInt();
 	std::string username = root["username"].asString();
 	std::string password = root["password"].asString();
-
-	bool is_login_success = true;
 	/*
-		查询数据库(等待实现)
+		查询数据库
 		返回是否查询成功
 	*/
-
+	bool is_login_success = true;
+	User user;
+	user = _user_model.query(id);
+	if(user.getId()==-1){//查询失败
+		is_login_success=false;
+	}
+	else if(user.getName()!=username||user.getPassword()!=password){
+		is_login_success=false;
+	}else if(user.getState()=="online"){
+		is_login_success=false;
+	}
 	/*
 		构造返回消息
 	*/
 	
-	if(is_login_success){
+	if(is_login_success){//登录成功
+		//设置用户状态为在线
+		user.setState("online");
+		_user_model.updateState(user);
+
 		response["code"] = CODE_LOGIN_SUCCESS;
-		response["data"] = "login success";
+		response["msg"] = "login success";
 	}
-	else {
+	else {//登录失败
 		response["code"] = CODE_LOGIN_FAILED;
-		response["data"] = "login failed";
+		response["msg"] = "login failed";
 	}
 	std::string return_str = response.toStyledString();
 	session->Send(return_str, msg_id);//发送消息
@@ -218,9 +226,17 @@ void LogicSystem::logoutCallBack(shared_ptr<CSession> session, short msg_id, str
 	Json::Value root;
 	Json::Value response;//返回消息
 	reader.parse(msg_data, root);
-	std::cout << "recevie msg id  is " << msg_id << " msg data is "
-		<< root["data"].asString() << endl;
 	std::cout<<"进入登出回调函数"<<endl;
+	
+	//需要在这里构造回复的消息
+	response["code"] = CODE_LOGOUT_SUCCESS;
+	response["data"] = "logout success";
+	std::string return_str = response.toStyledString();
+	session->Send(return_str, msg_id);//发送消息
+	//设置用户状态为离线
+	User user(root["id"].asInt(), "", "", "offline");
+	_user_model.updateState(user);
+	//此时对端肯定会关闭连接，服务器不需要处理
 }
 
 

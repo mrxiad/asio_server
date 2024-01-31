@@ -8,7 +8,12 @@ add_executable(server ${SERVER_SOURCES})
 
 
 # 添加头文件搜索路径
-target_include_directories(server PUBLIC include)
+target_include_directories(server PUBLIC 
+        include
+        ../public/db
+        ../public
+        ../model
+        /usr/include/mysql)  # 添加 MySQL 开发库的头文件路径
 
 # 查找 Boost 库
 find_package(Boost 1.65 REQUIRED COMPONENTS system filesystem)
@@ -21,6 +26,14 @@ endif()
 # 添加 pthread 库
 target_link_libraries(server pthread)
 
-#json库
-target_link_libraries(server "${CMAKE_SOURCE_DIR}/../3rdParty/json/lib/libjsoncpp.so")
+message(STATUS "当前 CMakeLists.txt 的目录: ${CMAKE_CURRENT_SOURCE_DIR}")
 
+
+# 直接链接 JSONCPP 库
+target_link_libraries(server "${CMAKE_CURRENT_SOURCE_DIR}/../3rdParty/json/lib/libjsoncpp.so")
+
+# 直接链接 _public 库
+target_link_libraries(server "${CMAKE_CURRENT_SOURCE_DIR}/../lib/lib_public.so")
+
+# 直接链接 MySQL 库
+target_link_libraries(server "${CMAKE_CURRENT_SOURCE_DIR}/../lib/lib_mysql.so")

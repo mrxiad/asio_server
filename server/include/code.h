@@ -6,6 +6,8 @@ enum{
     CODE_REGISTER_FAILED,           //注册失败
     CODE_LOGIN_SUCCESS,             //登录成功
     CODE_LOGIN_FAILED,              //登录失败
+    CODE_LOGOUT_SUCCESS,            //登出成功
+    CODE_LOGOUT_FAILED,             //登出失败
     CODE_ADD_FRIEND_SUCCESS,        //添加好友成功
     CODE_ADD_FRIEND_FAILED,         //添加好友失败
     CODE_CREATE_GROUP_SUCCESS,      //创建群组成功

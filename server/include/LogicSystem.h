@@ -14,6 +14,7 @@
 #include <json/json.h>
 #include <json/value.h>
 #include <json/reader.h>
+#include "userModel.h"
 
 typedef function<void(shared_ptr<CSession>, short msg_id, string msg_data)> FunCallBack;
 class LogicSystem:public Singleton<LogicSystem>
@@ -65,6 +66,11 @@ private:
 	std::condition_variable _consume;//条件变量
 	bool _b_stop;//是否停止
 	std::map<short, FunCallBack> _fun_callbacks;//消息id和回调函数的映射
+
+
+	//操作用户表的对象
+	UserModel _user_model;
+	
 };
 
 

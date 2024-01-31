@@ -20,12 +20,15 @@ public:
 	CSession(boost::asio::io_service& io_service, CServer* server);
 	~CSession();
 	tcp::socket& GetSocket();
-	std::string& GetUuid();
+	std::string& GetUuid();//获取到uuid，通过uuid可以找到session，完成session之间的消息传递
 	void Start();//这个函数很重要，是解耦合的关键
 	void Send(char* msg,  short max_length, short msgid);
 	void Send(std::string msg, short msgid);
 	void Close();
 	std::shared_ptr<CSession> SharedSelf();
+	CServer* GetServer(){
+		return _server;
+	}
 private:
 	void HandleRead(const boost::system::error_code& error, size_t  bytes_transferred, std::shared_ptr<CSession> shared_self);
 	void HandleWrite(const boost::system::error_code& error, std::shared_ptr<CSession> shared_self);
