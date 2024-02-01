@@ -88,6 +88,7 @@ void CSession::HandleWrite(const boost::system::error_code& error, std::shared_p
 			std::cout << "handle write failed, error is " << error.message() << endl;
 			Close();
 			_server->ClearSession(_uuid);
+			//通知逻辑系统将本用户变为下线（异常退出）todo
 		}
 	}
 	catch (std::exception& e) {
@@ -283,6 +284,7 @@ void CSession::HandleRead(const boost::system::error_code& error, size_t  bytes_
 			std::cout << "handle read failed, error is " << error.message() << endl;
 			Close();
 			_server->ClearSession(_uuid);
+			//通知逻辑系统将本用户变为下线（异常退出）todo
 		}
 	}
 	catch (std::exception& e) {

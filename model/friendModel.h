@@ -1,13 +1,16 @@
 #ifndef FRIENDMODEL_H
 #define FRIENDMODEL_H
 
+//操作数据库的类
+
+
 #include "./include/user.h"
 #include <vector>
 #include <iostream>
 #include"../public/db/_mysql.h"
 using namespace std;
 
-// 维护好友信息的操作接口方法
+
 class FriendModel
 {
 public:

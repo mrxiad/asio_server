@@ -1,10 +1,13 @@
 #ifndef USER_MODEL_H
 #define USER_MODEL_H
 
+//操作数据库的类
+
+
 #include "./include/user.h"
 #include "../public/db/_mysql.h"
 #include <iostream>
-//对接数据库的User表的操作接口方法
+
 class UserModel {
 public:
     // 增加用户,需要添加uuid

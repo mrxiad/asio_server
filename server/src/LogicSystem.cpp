@@ -27,6 +27,7 @@ void LogicSystem::PostMsgToQue(shared_ptr<LogicNode> msg) {
 }
 
 void LogicSystem::DealMsg() {
+	////并不是无限循环，会挂起等待
 	for (;;) {
 		std::unique_lock<std::mutex> unique_lk(_mutex);
 		//判断队列为空则用条件变量阻塞等待，并释放锁
@@ -227,7 +228,7 @@ void LogicSystem::LoginCallBack(shared_ptr<CSession> session, short msg_id, stri
 }
 
 
-//退出回调函数
+//（正常退出回调函数）
 void LogicSystem::logoutCallBack(shared_ptr<CSession> session, short msg_id, string msg_data) {
 	Json::Reader reader;
 	Json::Value root;
@@ -236,13 +237,7 @@ void LogicSystem::logoutCallBack(shared_ptr<CSession> session, short msg_id, str
 	std::cout<<"进入退出回调函数"<<endl;
 	std::cout<<root<<endl;
 	
-	//需要在这里构造回复的消息
-	response["code"] = CODE_LOGOUT_SUCCESS;
-	response["msg"] = "logout success";
-	std::string return_str = response.toStyledString();
-	session->Send(return_str, msg_id);//发送消息
-	
-	//设置用户状态为离线，清空uuid
+	// 设置用户状态为离线，清空uuid
 
 	User user(stoi(root["id"].asString()), "", "", "offline","");
 	_user_model.updateState(user);
