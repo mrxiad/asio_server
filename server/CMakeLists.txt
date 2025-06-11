@@ -26,16 +26,29 @@ endif()
 # 添加 pthread 库
 target_link_libraries(server pthread)
 
+
 message(STATUS "当前 CMakeLists.txt 的目录: ${CMAKE_CURRENT_SOURCE_DIR}")
 
-# 直接链接 JSONCPP 库
-target_link_libraries(server "${CMAKE_CURRENT_SOURCE_DIR}/../3rdParty/json/lib/libjsoncpp.so")
+set(LIB_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../output/lib")
 
-# 直接链接 _public 库
-target_link_libraries(server "${CMAKE_CURRENT_SOURCE_DIR}/../lib/lib_public.so")
+# 查找 JSONCPP 库
+find_library(JSONCPP_LIB jsoncpp PATHS ${LIB_OUTPUT_DIR} NO_DEFAULT_PATH)
+if(NOT JSONCPP_LIB)
+    find_library(JSONCPP_LIB jsoncpp)
+endif()
+if(JSONCPP_LIB)
+    target_link_libraries(server ${JSONCPP_LIB})
+else()
+    message(FATAL_ERROR "无法找到 jsoncpp 库")
+endif()
 
-# 直接链接 MySQL 库
-target_link_libraries(server "${CMAKE_CURRENT_SOURCE_DIR}/../lib/lib_mysql.so")
+# 查找自定义公共库
+find_library(PUBLIC_LIB NAMES lib_public PATHS ${LIB_OUTPUT_DIR} REQUIRED NO_DEFAULT_PATH)
+target_link_libraries(server ${PUBLIC_LIB})
+
+# 查找自定义 MySQL 库
+find_library(MYSQL_HELPER_LIB NAMES lib_mysql PATHS ${LIB_OUTPUT_DIR} REQUIRED NO_DEFAULT_PATH)
+target_link_libraries(server ${MYSQL_HELPER_LIB})
 
 
 # 直接链接系统的 MySQL 客户端库

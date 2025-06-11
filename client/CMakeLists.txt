@@ -16,5 +16,17 @@ endif()
 # 添加 pthread 库
 target_link_libraries(client pthread)
 
-target_link_libraries(client "${CMAKE_SOURCE_DIR}/../3rdParty/json/lib/libjsoncpp.so")
+# 查找 jsoncpp 库，优先从 output/lib 中查找
+find_library(JSONCPP_LIB jsoncpp
+            PATHS "${CMAKE_SOURCE_DIR}/../output/lib" 
+            PATH_SUFFIXES "" 
+            NO_DEFAULT_PATH)
+if(NOT JSONCPP_LIB)
+    find_library(JSONCPP_LIB jsoncpp)
+endif()
+if(JSONCPP_LIB)
+    target_link_libraries(client ${JSONCPP_LIB})
+else()
+    message(FATAL_ERROR "无法找到 jsoncpp 库")
+endif()
 
