@@ -17,7 +17,7 @@ class CServer;
 class CSession: public std::enable_shared_from_this<CSession>
 {
 public:
-	CSession(boost::asio::io_service& io_service, CServer* server);
+	CSession(boost::asio::io_context& io_context, CServer* server);
 	~CSession();
 	tcp::socket& GetSocket();
 	std::string& GetUuid();//获取到uuid，通过uuid可以找到session，完成session之间的消息传递

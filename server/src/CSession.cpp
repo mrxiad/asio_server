@@ -4,8 +4,8 @@
 #include"LogicSystem.h"
 #include<iostream>
 #include<sstream>
-CSession::CSession(boost::asio::io_service& io_service, CServer* server):
-	_socket(io_service), _server(server), _b_close(false),_b_head_parse(false){
+CSession::CSession(boost::asio::io_context& io_context, CServer* server):
+	_socket(io_context), _server(server), _b_close(false),_b_head_parse(false){
 	boost::uuids::uuid  a_uuid = boost::uuids::random_generator()();
 	_uuid = boost::uuids::to_string(a_uuid);
 	_recv_head_node = std::make_shared<MsgNode>(HEAD_TOTAL_LEN);
