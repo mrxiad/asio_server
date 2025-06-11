@@ -2,7 +2,7 @@
 **/build/
 
 # Ignore Node.js modules
-/front/node_modules
+/front/node_modules/
 
 # Ignore binary executables
 /bin
