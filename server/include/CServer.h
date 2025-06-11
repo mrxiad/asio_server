@@ -14,7 +14,7 @@ class CSession;
 class CServer
 {
 public:
-	CServer(boost::asio::io_service& io_service, short port);
+	CServer(boost::asio::io_context& io_context, short port);
 	void ClearSession(std::string);
 	std::shared_ptr<CSession> GetSession(std::string uuid){
 		if(_sessions.find(uuid) != _sessions.end()){
@@ -26,7 +26,7 @@ public:
 private:
 	void HandleAccept(std::shared_ptr<CSession>, const boost::system::error_code & error);
 	void StartAccept();
-	boost::asio::io_service& _io_service;
+	boost::asio::io_context& _io_context;
 	short _port;
 	tcp::acceptor _acceptor;
 	std::map<std::string, std::shared_ptr<CSession>> _sessions;

@@ -1,9 +1,9 @@
 #include "CServer.h"
 #include "CSession.h"
 #include <iostream>
-#include"AsioIOServicePool.h"
-CServer::CServer(boost::asio::io_service& io_service, short port):_io_service(io_service), _port(port),
-_acceptor(io_service, tcp::endpoint(tcp::v4(),port))
+#include"AsioIOContextPool.h"
+CServer::CServer(boost::asio::io_context& io_context, short port):_io_context(io_context), _port(port),
+_acceptor(io_context, tcp::endpoint(tcp::v4(),port))
 {
 	cout << "Server start success, listen on port : " << _port << endl;
 	StartAccept();
@@ -24,7 +24,7 @@ void CServer::HandleAccept(shared_ptr<CSession> new_session, const boost::system
 void CServer::StartAccept() {
 
 	//获取context
-	auto &io_context = AsioIOServicePool::GetInstance()->GetIOService();
+        auto &io_context = AsioIOContextPool::GetInstance()->GetIOContext();
 
 	//创建新的session
 	shared_ptr<CSession> new_session = make_shared<CSession>(io_context, this);

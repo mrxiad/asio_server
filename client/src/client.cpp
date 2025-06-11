@@ -45,7 +45,7 @@ void read_thread(tcp::socket& sock) {
 
 int main() {
     try {
-        io_service ioc;
+        io_context ioc;
         tcp::endpoint remote_ep(ip::address::from_string("127.0.0.1"), 10086);
         tcp::socket sock(ioc);
         boost::system::error_code error = boost::asio::error::host_not_found;

@@ -137,9 +137,15 @@ int connection::disconnect()
 
   m_conn=NULL;
 
-  m_state = 0;    
+  m_state = 0;
 
   return 0;
+}
+
+bool connection::ping()
+{
+  if (m_conn == NULL) return false;
+  return mysql_ping(m_conn) == 0;
 }
 
 int connection::rollback()
